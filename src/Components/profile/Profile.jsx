@@ -30,9 +30,22 @@ export default function Profile() {
               src="https://thumbs.dreamstime.com/b/beautiful-male-model-shoot-studio-man-professional-make-up-hair-style-89501857.jpg"
             />
 
-            <span className="absolute top-4 right-6 text-xl">
-              <BsThreeDots />
-            </span>
+            <div className="dropdown dropdown-end absolute top-0 right-6">
+              <label tabIndex={0} className="m-1 text-xl">
+                <BsThreeDots />
+              </label>
+              <ul
+                tabIndex={0}
+                className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-36"
+              >
+                <li>
+                  <a>Edit Profile</a>
+                </li>
+                <li>
+                  <a>Share Link</a>
+                </li>
+              </ul>
+            </div>
 
             <div className="ml-8 pt-60 flex flex-col gap-2">
               <p className="font-bold text-3xl">Danny Douglas</p>
