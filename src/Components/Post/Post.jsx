@@ -1,4 +1,5 @@
 import {TfiLocationPin} from "react-icons/tfi"
+import Comments from "../Comments/Comments"
 import { useState } from "react"
 import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
 export default function Post({user, post}) {
@@ -72,10 +73,11 @@ export default function Post({user, post}) {
         </figure>
         <div className="flex gap-4 items-center px-4 py-2">
             <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{handleclick(1)}}/> {votes} <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
-            <p className="flex gap-2 items-center"><BiCommentDetail/> {post.comments.length}</p>
+            <label htmlFor="my_modal_6" className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><BiCommentDetail/> {post.comments.length}</label>
             <BiShareAlt/>
             <BiStar className="ml-auto"/>
         </div>
         </div>
+        <Comments comms={post.comments}/>
     </>)
 }
