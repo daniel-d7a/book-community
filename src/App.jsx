@@ -1,6 +1,10 @@
 import { useState } from "react";
 import Post from "./Components/Post/Post";
 import Nav from "./Components/Nav/Nav";
+import CreateFeed from "./Components/Feed/CreateFeed";
+import Notifications from "./Components/Notifications/Notifications";
+import Profile from "./Components/profile/Profile";
+
 
 class User{
   constructor(id,username, state, profile,starred = [] ){
@@ -48,9 +52,6 @@ class Comment{
   }
 }
 
-
-
-
 function App() {
   const user = new User(1,"Ehab Mohamed","w","https://spunout.ie/wp-content/uploads/2021/01/portrait-black-young-man-face-man-person-ethnic-student-diversity-diverse-confident-millennial_t20_K6aZOV-2.jpg")
   const comment = new Comment(1,user,"Yeah I Like this book")
@@ -59,7 +60,7 @@ function App() {
   return (
     <>
       <Post user = {user} post={post} />
-      <Nav/>
+      <Nav/>   
     </>
   );
 }
