@@ -1,6 +1,7 @@
 import { useState } from "react"
-import Comments from "./Comments"
+import CommentReplyWidget from "./CommentReplyWidget"
 import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
+import {MdReply} from "react-icons/md"
 export default function Comment({user, comment,type,commID}) {
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
@@ -21,7 +22,8 @@ export default function Comment({user, comment,type,commID}) {
         </div>
         <div className="flex gap-2">
             <p className="flex gap-1 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{}}/> 5 <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{}}/></p>
-            <label htmlFor={`my_modal_${type === "Comments"?'c':'r'}${commID}`} className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><BiCommentDetail/> {comment.replies.length}</label>
+            {type === "Comments"?<label htmlFor={`replies_${commID}`} className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><MdReply/>{comment.replies.length}</label>:""}
+            {type === "Comments"?<CommentReplyWidget type={"Replies"} comms={comment.replies} postID={commID}/>:""}
         </div>
     </div>)
 }
