@@ -1,5 +1,5 @@
 import Comment from "./Comment"
-export default function Comments({comms}) {
+export default function Comments({type,comms,postID}) {
     return(<>
         {console.log(comms)}
         {/* <div className="w-full h-screen bg-gray-500/50 fixed top-0 left-0 ">
@@ -15,17 +15,17 @@ export default function Comments({comms}) {
         </div> */}
         
 
-        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+        <input type="checkbox" id={`comments_${postID}`} className="modal-toggle" />
         <div className="modal z-50">
             <div className="modal-box px-0 pb-0 bg-slate-700">
-            <h3 className="font-bold text-lg mb-4 ml-8">Comments</h3>
-            <div className="overflow-y-scroll w-full h-72 flex flex-wrap justify-center gap-2">
+            <h3 className="font-bold text-lg mb-4 ml-8">{type}</h3>
+            <div className="overflow-y-scroll w-full max-h-72 flex flex-wrap justify-center gap-2">
                 {comms.map(comm => 
-                    <Comment user={comm.user} text={comm.text}/>
+                    <Comment user={comm.user} comment={comm}/>
                 )}
             </div>
             <div className="modal-action">
-                <label htmlFor="my_modal_6" onClick={()=>document.body.style.overflow = 'unset'} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
+                <label htmlFor={`comments_${postID}`} onClick={()=>document.body.style.overflow = 'unset'} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
             </div>
             </div>
         </div>

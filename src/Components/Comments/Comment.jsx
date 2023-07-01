@@ -1,6 +1,7 @@
 import { useState } from "react"
+import Comments from "./Comments"
 import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
-export default function Comment({user, text}) {
+export default function Comment({user, comment,type,commID}) {
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
     return(<div className="w-11/12">
@@ -15,9 +16,12 @@ export default function Comment({user, text}) {
             <div className="text-sm font-bold">
                 <a href="#">{user.username || "user"} </a>
             </div>
-                <div className="text-xs">{text}</div>
+                <div className="text-xs">{comment.text}</div>
             </div>
         </div>
-        <p className="flex gap-1 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{}}/> 5 <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{}}/></p>
+        <div className="flex gap-2">
+            <p className="flex gap-1 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{}}/> 5 <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{}}/></p>
+            <label htmlFor={`my_modal_${type === "Comments"?'c':'r'}${commID}`} className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><BiCommentDetail/> {comment.replies.length}</label>
+        </div>
     </div>)
 }
