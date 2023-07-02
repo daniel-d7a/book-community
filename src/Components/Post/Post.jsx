@@ -38,7 +38,7 @@ export default function Post({user, post}) {
         
     }
     return(<>
-        <div className="card w-full bg-base-100 shadow-xl mb-2">
+        <div className="card max-w-2xl mx-auto w-full bg-base-100 shadow-xl mb-2">
         <div className="flex gap-4 items-center pt-4 pl-4">
             <div className="relative">
                 <img src={user.profile} alt="Shoes" className=" w-12 h-12 rounded-full object-cover" />
