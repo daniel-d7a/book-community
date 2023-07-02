@@ -1,29 +1,44 @@
-import { useState } from "react"
-import CommentReplyWidget from "./CommentReplyWidget"
-import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
-import {MdReply} from "react-icons/md"
+import {Fragment, useState } from "react"
+import {
+    Accordion,
+    AccordionHeader,
+    AccordionBody,
+  } from "@material-tailwind/react";
+import {BiUpvote,BiDownvote,BiSend, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
+import CommentBody from "./CommentBody";
 export default function Comment({user, comment,type,commID}) {
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
+    const [open, setOpen] = useState(0);
+    const handleOpen = (value) => {
+        setOpen(open === value ? 0 : value);
+    };
+
     return(<div className="w-11/12">
-        <div className="flex gap-2 rounded-md w-full bg-slate-600 px-2 py-2">
-            <div className="relative shrink-0 h-10 w-fit">
-                <img src={user.profile} alt="Shoes" className=" w-10 h-10 rounded-full object-cover" />
-                <div className={`absolute bottom-0 right-0 w-4 h-4 rounded-full ${user.state ==="r"? "bg-teal-500": "bg-yellow-500"}  text-black border-2 border-base-100 flex items-center justify-center text-[8px]`}>
-                    {user.state === "r"? <BiBookReader/> : <BiEditAlt/>}
+        <CommentBody profile={user.profile} state={user.state} username={user.username} text={comment.text} type={"c"}/>
+        <div className="flex flex-col">
+            <div className="flex gap-2">
+                <p className="flex gap-1 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{}}/> 5 <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{}}/></p>
+            </div>
+            
+            <Accordion open={open === 1} className="pl-4">
+                <AccordionHeader onClick={() => handleOpen(1)} className="text-xs mb-2 underline">
+                {open === 0? `show ${comment.replies.length} replies`:"hide replies"}
+                </AccordionHeader>
+                <AccordionBody className="flex flex-wrap gap-2">
+                    {comment.replies.map(reply => <CommentBody profile={reply.user.profile} state={reply.user.state} username={reply.user.username} text={reply.text} type={"r"}/>)}
+                    <div className="w-full flex justify-center">
+                    <div className="form-control w-full">
+                        <div className="input-group w-full">
+                            <textarea placeholder="Add a reply" className="py-3 pl-3 bg-slate-800 overflow-hidden break-words resize-none outline-none border-none w-full h-12" />
+                            <button className="btn btn-square border-none bg-yellow-500">
+                                <BiSend className="text-2xl text-white"/>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div> 
-            <div>
-            <div className="text-sm font-bold">
-                <a href="#">{user.username || "user"} </a>
-            </div>
-                <div className="text-xs">{comment.text}</div>
-            </div>
-        </div>
-        <div className="flex gap-2">
-            <p className="flex gap-1 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{}}/> 5 <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{}}/></p>
-            {type === "Comments"?<label htmlFor={`replies_${commID}`} className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><MdReply/>{comment.replies.length}</label>:""}
-            {type === "Comments"?<CommentReplyWidget type={"Replies"} comms={comment.replies} postID={commID}/>:""}
+                </AccordionBody>
+            </Accordion>
         </div>
     </div>)
 }
