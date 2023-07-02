@@ -12,15 +12,14 @@ export default function CommentReplyWidget({type, comms, postID}) {
                 )}
             </div>
             <div className="w-full flex justify-center pt-2 px-2">
-            <div className="form-control w-full">
-            <div className="input-group w-full">
-                <input type="text" placeholder={`Add a ${type === "Comments"?"Comment":"Reply"}`} className="input outline-none border-none w-full" />
-                <button className="btn btn-square bg-yellow-500">
-                    <BiSend className="text-2xl text-white"/>
-                </button>
-            </div>
-            </div>
-                {/* <input type="text" placeholder={`Add a ${type === "Comments"?"Comment":"Reply"}`} className="input w-full max-w-xs" /> */}
+                <div className="form-control w-full">
+                <div className="input-group w-full">
+                <textarea placeholder={`Add a ${type === "Comments"?"Comment":"Reply"}`} className="py-3 pl-3 bg-slate-800 overflow-hidden break-words resize-none outline-none border-none w-full h-12" />
+                    <button className="btn btn-square bg-yellow-500 border-none">
+                        <BiSend className="text-2xl text-white"/>
+                    </button>
+                </div>
+                </div>
             </div>
             <div className="modal-action">
                 <label htmlFor={`${type ==="Comments"? "comments":"replies"}_${postID}`} onClick={()=>type === "Comments"?document.body.style.overflow = 'unset':document.body.style.overflow = 'hidden'} className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</label>
