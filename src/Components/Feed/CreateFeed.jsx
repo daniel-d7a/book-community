@@ -6,7 +6,7 @@ import Icon from "./atoms/icon"
 export default function CreateFeed() {
 
     return<>
-    <div className="w-full flex flex-col justify-center items-center my-4 bg-base-300 p-4 gap-4">
+    <div className="max-w-2xl mx-auto w-full flex flex-col justify-center items-center my-4 bg-base-300 p-4 gap-4">
         <label className="flex justify-center items-center w-full bg-base-100 ">
         <div className="w-10 h-10 ml-4 rounded-full overflow-hidden">
 
