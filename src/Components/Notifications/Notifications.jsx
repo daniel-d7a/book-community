@@ -1,9 +1,11 @@
-import SingleNotification from "./SIngleNotification";
+import SingleNotification from "./SingleNotification";
 
 export default function Notifications() {
   return (
     <div className="bg-base-200">
-      <h2 className="text-center font-bold text-lg md:text-xl py-6">Notifications</h2>
+      <h2 className="text-center font-bold text-lg md:text-xl py-6">
+        Notifications
+      </h2>
       <div className="space-y-5 md:mx-60 bg-base-300 py-6">
         {[
           {
