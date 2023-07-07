@@ -12,7 +12,7 @@ export default function CreateFeed() {
 
         <img src="https://engineering.unl.edu/images/staff/Kayla-Person.jpg" className="w-full object-cover "/>
         </div>
-        <input type="text" placeholder="Type here" className="input w-full max-w-xs" />
+        <input type="text" placeholder="Type here" className="input w-full focus:outline-none" />
         </label>
         <div className="capitalize w-full flex justify-around items-center">
             <Icon icon={<HiOutlineEmojiHappy/>} text={"feeling"} styles="badge-info"/>

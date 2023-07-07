@@ -6,6 +6,7 @@ import Notifications from "./Components/Notifications/Notifications";
 import Profile from "./Components/profile/Profile";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./Components/Signup/signup";
+import Login from "./Components/Login/login";
 
 class User {
   constructor(id, username, state, profile, starred = []) {
@@ -108,6 +109,7 @@ function App() {
             <Route path="/" element={<Home feed={posts} />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/signup" element={<SignUp />} />
+            <Route path="/login" element={<Login/>} />
           </Routes>
         </div>
         <Nav />
