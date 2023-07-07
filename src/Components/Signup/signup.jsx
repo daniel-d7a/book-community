@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../Firebase/auth";
+import { useNavigate } from "react-router";
 export default function SignUp() {
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -13,6 +14,7 @@ export default function SignUp() {
       username: "",
     },
   });
+  const navigate = useNavigate()
 
   // signup the user using firebase auth
   const {
@@ -29,6 +31,7 @@ export default function SignUp() {
     {
       onSuccess: (data) => {
         console.log("auth data from firebase", data);
+        navigate("/login")
       },
     }
   );
@@ -70,13 +73,13 @@ export default function SignUp() {
           />
 
           <input
-            type="text"
+            type="password"
             placeholder="Password"
             className="input input-bordered w-full py-8 md:py-6"
             {...register("password", { required: true })}
           />
           <input
-            type="text"
+            type="password"
             placeholder="Confirm Password"
             className="input input-bordered w-full py-8 md:py-6"
             {...register("confirmPassword", { required: true })}
