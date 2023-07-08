@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../Firebase/auth";
+import { auth, signup } from "../../Firebase/api/auth/auth";
 export default function SignUp() {
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -21,17 +21,12 @@ export default function SignUp() {
     error,
     isLoading,
     isError,
-  } = useMutation(
-    // ["user", signUpFormData],
-    async ({ email, password }) => {
-      return await createUserWithEmailAndPassword(auth, email, password);
+  } = useMutation({
+    mutationFn: signup,
+    onSuccess: (data) => {
+      console.log("auth data from firebase", data);
     },
-    {
-      onSuccess: (data) => {
-        console.log("auth data from firebase", data);
-      },
-    }
-  );
+  });
   // add user to users collection
 
   async function submitHandler(userData) {
