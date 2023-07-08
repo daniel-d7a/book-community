@@ -6,7 +6,7 @@ import { signInWithEmailAndPassword } from "@firebase/auth";
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod"
-import { string, z } from "zod";
+import { string, z,boolean } from "zod";
 
 const scheme = z.object({
   email: string().email({message: "Invalid email address"}),
@@ -22,7 +22,8 @@ export default function Login() {
   const timer = useRef()
   const navigate = useNavigate()
   function submit(d){
-    mutate(d)
+    const data = {...d, rememberMe: check}
+    mutate(data)
   }
   const{
     mutate
