@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router";
-import { login } from "../../Firebase/api/auth/auth";
+import { login } from "../../Firebase/api/auth/auth.js";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";

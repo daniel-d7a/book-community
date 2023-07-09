@@ -11,7 +11,6 @@ import {
 } from "firebase/firestore";
 
 import { db } from "./database";
-import { queryClient } from "../../../main";
 import { auth } from "../auth/auth";
 
 const postsCollectionRef = collection(db, "posts");

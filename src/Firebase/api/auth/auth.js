@@ -21,7 +21,6 @@ export async function signup(user) {
   } = await createUserWithEmailAndPassword(auth, user.email, user.password);
   return await creatUserAfterSignUp(uid, user);
 }
-
 export async function login(data) {
   if (data.rememberMe) {
     await setPersistence(auth, browserLocalPersistence);
