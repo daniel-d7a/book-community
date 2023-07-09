@@ -33,6 +33,9 @@ export const createPost = async (post) => {
     ...post,
     created_at: Timestamp.now(),
     user_id: auth.currentUser.uid,
+    comment_ids: [],
+    votes: 0,
+    voter_ids : [],
   });
 };
 
