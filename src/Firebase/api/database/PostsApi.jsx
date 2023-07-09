@@ -28,6 +28,7 @@ export async function getPostById(id) {
 }
 
 export const createPost = async (post) => {
+  console.log("post from api", post);
   return await addDoc(postsCollectionRef, {
     ...post,
     created_at: Timestamp.now(),
