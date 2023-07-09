@@ -2,9 +2,9 @@ import { AiOutlineGoogle } from "react-icons/ai";
 import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../Firebase/auth";
+import { getCurrentUser, signup } from "../../Firebase/api/auth/auth";
 import { useNavigate } from "react-router";
+
 export default function SignUp() {
   const { register, handleSubmit } = useForm({
     defaultValues: {
@@ -14,7 +14,7 @@ export default function SignUp() {
       username: "",
     },
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // signup the user using firebase auth
   const {
@@ -23,18 +23,15 @@ export default function SignUp() {
     error,
     isLoading,
     isError,
-  } = useMutation(
-    // ["user", signUpFormData],
-    async ({ email, password }) => {
-      return await createUserWithEmailAndPassword(auth, email, password);
+  } = useMutation({
+    mutationFn: signup,
+    mutationKey: ["currentUser"],
+    onSuccess: async (data) => {
+      console.log("auth data from firebase", data);
+      await getCurrentUser();
+      // navigate("/login");
     },
-    {
-      onSuccess: (data) => {
-        console.log("auth data from firebase", data);
-        navigate("/login")
-      },
-    }
-  );
+  });
   // add user to users collection
 
   async function submitHandler(userData) {

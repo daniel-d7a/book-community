@@ -7,6 +7,7 @@ import Profile from "./Components/profile/Profile";
 import { Route, Routes } from "react-router-dom";
 import SignUp from "./Components/Signup/signup";
 import Login from "./Components/Login/login";
+import TestQueries from "./testQueries";
 
 class User {
   constructor(id, username, state, profile, starred = []) {
@@ -101,18 +102,18 @@ function App() {
   );
   const posts = Array(5).fill(post);
 
-
   return (
     <>
-        <div className="pb-14">
-          <Routes>
-            <Route path="/" element={<Home feed={posts} />} />
-            <Route path="/notifications" element={<Notifications />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/login" element={<Login/>} />
-          </Routes>
-        </div>
-        <Nav />
+      <div className="pb-14">
+        <Routes>
+          <Route path="/" element={<Home feed={posts} />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/test" element={<TestQueries />} />
+        </Routes>
+      </div>
+      <Nav />
     </>
   );
 }
