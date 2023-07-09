@@ -31,7 +31,10 @@ export async function login(data) {
   const userData = await signInWithEmailAndPassword(auth, data.email, data.password);
   if(data.rememberMe){
     window.localStorage.setItem("currentUser",JSON.stringify(userData))
+  }else{
+    window.sessionStorage.setItem("currentUser",JSON.stringify(userData))
   }
+  
   return userData;
 }
 
