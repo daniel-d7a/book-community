@@ -4,10 +4,14 @@ import Nav from "./Components/Nav/Nav";
 import CreateFeed from "./Components/Feed/CreateFeed";
 import Notifications from "./Components/Notifications/Notifications";
 import Profile from "./Components/profile/Profile";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SignUp from "./Components/Signup/signup";
 import Login from "./Components/Login/login";
 import TestQueries from "./testQueries";
+import { auth } from "./Firebase/api/auth/auth";
+import { useEffect } from "react";
+
 
 class User {
   constructor(id, username, state, profile, starred = []) {
@@ -75,6 +79,7 @@ class Reply {
 }
 
 function App() {
+  
   const user = new User(
     1,
     "Ehab Mohamed",
@@ -101,10 +106,11 @@ function App() {
     14
   );
   const posts = Array(5).fill(post);
-
+  
   return (
     <>
       <div className="pb-14">
+        
         <Routes>
           <Route path="/" element={<Home feed={posts} />} />
           <Route path="/notifications" element={<Notifications />} />

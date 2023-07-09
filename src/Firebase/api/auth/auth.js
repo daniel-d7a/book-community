@@ -23,11 +23,16 @@ export async function signup(user) {
 }
 export async function login(data) {
   if (data.rememberMe) {
+    
     await setPersistence(auth, browserLocalPersistence);
   } else {
     await setPersistence(auth, browserSessionPersistence);
   }
-  return await signInWithEmailAndPassword(auth, data.email, data.password);
+  const userData = await signInWithEmailAndPassword(auth, data.email, data.password);
+  if(data.rememberMe){
+    window.localStorage.setItem("currentUser",JSON.stringify(userData))
+  }
+  return userData;
 }
 
 export async function logout() {
