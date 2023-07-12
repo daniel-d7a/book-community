@@ -4,19 +4,12 @@ import { getCurrentUser, logout } from "./Firebase/api/auth/auth";
 import { auth } from "./Firebase/api/auth/auth";
 
 export default function TestQueries() {
-  const { data: user, error } = useQuery({
-    queryKey: ["test"],
-    queryFn: getCurrentUser,
-  });
-
-  console.log(user);
-
   const { data: posts } = useQuery({
     queryKey: ["posts"],
-    enabled: !!user.uid,
-    queryFn: () => getUserPosts(user.uid),
+    queryFn: () => getUserPosts(auth.currentUser.uid),
   });
 
+  console.log("user", auth.currentUser.uid);
   console.log("data ", posts);
 
   return (
