@@ -21,6 +21,12 @@ export async function getAllPosts() {
   return querySnapshot.docs.map((doc) => doc.data());
 }
 
+export async function getUserPosts(userId) {
+  const q = query(postsCollectionRef, where("user_id", "==", userId));
+  const querySnapshot = await getDocs(q);
+  return querySnapshot.docs.map((doc) => doc.data());
+}
+
 export async function getPostById(id) {
   const docRef = doc(db, "posts", id);
   const docSnap = await getDoc(docRef);
@@ -35,7 +41,7 @@ export const createPost = async (post) => {
     user_id: auth.currentUser.uid,
     comment_ids: [],
     votes: 0,
-    voter_ids : [],
+    voter_ids: [],
   });
 };
 
