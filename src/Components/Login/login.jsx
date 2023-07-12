@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
-import { login } from "../../Firebase/api/auth/auth.js";
+import { useNavigate} from "react-router";
+import { auth, login } from "../../Firebase/api/auth/auth.js";
 import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { string, z } from "zod";
+
+import {zodResolver} from "@hookform/resolvers/zod"
+import { string, z} from "zod";
 
 const scheme = z.object({
   email: string().email({ message: "Invalid email address" }),
@@ -13,17 +14,19 @@ const scheme = z.object({
 });
 
 export default function Login() {
-  const { register, handleSubmit, formState } = useForm({
-    resolver: zodResolver(scheme),
-  });
-  const [wrongData, setWrongData] = useState(false);
+  
 
-  const { errors } = formState;
-  const [check, setCheck] = useState(false);
-  const timer = useRef();
-  const navigate = useNavigate();
-  function submit(d) {
-    mutate(d);
+  const {register, handleSubmit, formState} = useForm({resolver: zodResolver(scheme)});
+  const [wrongData, setWrongData] = useState(false)
+  
+  const {errors} = formState
+  const [check, setCheck] = useState(false)
+  const timer = useRef()
+  const navigate = useNavigate()
+  function submit(d){
+    const data = {...d, rememberMe: check}
+    // console.log(data)    
+    mutate(data)
   }
   const { mutate } = useMutation({
     mutationFn: login,
@@ -43,11 +46,17 @@ export default function Login() {
       }
     },
   });
+  
   useEffect(() => {
+    if(window.localStorage.getItem("currentUser")){
+      console.log(JSON.parse(window.localStorage.getItem("currentUser")).user.uid)
+      navigate("/")
+    }
     return () => {
       clearTimeout(timer.current);
     };
   }, [timer]);
+  
 
   return (
     <div className="relative bg-base-200 h-[100vh] w-full flex flex-col md:flex-row md:justify-end justify-center items-center py-10 md:px-0">
