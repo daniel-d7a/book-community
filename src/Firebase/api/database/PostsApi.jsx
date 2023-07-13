@@ -18,13 +18,29 @@ const postsCollectionRef = collection(db, "posts");
 export async function getAllPosts() {
   const q = query(postsCollectionRef);
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((doc) => doc.data());
+  const postsData = querySnapshot.docs.map((doc) => doc.data());
+
+  return await Promise.all(
+    postsData.map(async (singlePost) => {
+      const userData = (
+        await getDoc(doc(db, "users", singlePost.user_id))
+      ).data();
+      console.log("user data", userData);
+      return { ...singlePost, user_data: userData };
+    })
+  );
 }
 
 export async function getUserPosts(userId) {
+  const userData = (await getDoc(doc(db, "users", userId))).data();
   const q = query(postsCollectionRef, where("user_id", "==", userId));
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map((doc) => doc.data());
+  return querySnapshot.docs.map((doc) => {
+    return {
+      ...doc.data(),
+      user_data: userData,
+    };
+  });
 }
 
 export async function getPostById(id) {
