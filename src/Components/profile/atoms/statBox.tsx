@@ -1,3 +1,6 @@
+// import { z } from "zod";
+
+//@ts-ignore
 export default function StatBox({ number, name }) {
   return (
     <div className="capitalize text-sm">

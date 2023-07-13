@@ -3,7 +3,7 @@ import { TfiLocationPin } from "react-icons/tfi";
 import { CgPoll } from "react-icons/cg";
 import Icon from "./atoms/icon";
 import { useMutation } from "@tanstack/react-query";
-import { createPost } from "./../../Firebase/api/database/PostsApi";
+import { createPost } from "../../Firebase/api/database/PostsApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";

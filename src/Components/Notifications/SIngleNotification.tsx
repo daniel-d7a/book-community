@@ -1,10 +1,24 @@
+import { type } from "os";
+import { z } from "zod";
+
+//TODO: check time value
+const singleNotificationPropsSchema = z.object({
+  image: z.string(),
+  person: z.string(),
+  action: z.string(),
+  text: z.string(),
+  time: z.tuple([z.number(), z.any()]),
+});
+
+type SingleNotificationProps = z.infer<typeof singleNotificationPropsSchema>;
+
 export default function SingleNotification({
   image,
   person,
   action,
   text,
   time,
-}) {
+}: SingleNotificationProps) {
   return (
     <>
       <div className="flex px-6 gap-4 justify-start items-start">

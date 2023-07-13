@@ -4,6 +4,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getCurrentUser, signup } from "../../Firebase/api/auth/auth";
 import { useNavigate } from "react-router";
+import { SignUpData } from "../../Types/Auth";
 
 export default function SignUp() {
   const { register, handleSubmit } = useForm({
@@ -34,7 +35,7 @@ export default function SignUp() {
   });
   // add user to users collection
 
-  async function submitHandler(userData) {
+  async function submitHandler(userData: SignUpData) {
     console.log("user data from submit handler", userData);
     mutate(userData);
   }

@@ -9,32 +9,36 @@ import {
   browserSessionPersistence,
 } from "firebase/auth";
 import { creatUserAfterSignUp } from "../database/UserApi";
+import { LoginData, SignUpData } from "../../../Types/Auth";
 
 // TODO: add try catches to catch errors
 
 export const auth = getAuth(app);
 console.log("logged in user", auth.currentUser);
 
-export async function signup(user) {
+export async function signup(user: SignUpData) {
   const {
     user: { uid },
   } = await createUserWithEmailAndPassword(auth, user.email, user.password);
   return await creatUserAfterSignUp(uid, user);
 }
-export async function login(data) {
+export async function login(data: LoginData) {
   if (data.rememberMe) {
-    
     await setPersistence(auth, browserLocalPersistence);
   } else {
     await setPersistence(auth, browserSessionPersistence);
   }
-  const userData = await signInWithEmailAndPassword(auth, data.email, data.password);
-  if(data.rememberMe){
-    window.localStorage.setItem("currentUser",JSON.stringify(userData))
-  }else{
-    window.sessionStorage.setItem("currentUser",JSON.stringify(userData))
+  const userData = await signInWithEmailAndPassword(
+    auth,
+    data.email,
+    data.password
+  );
+  if (data.rememberMe) {
+    window.localStorage.setItem("currentUser", JSON.stringify(userData));
+  } else {
+    window.sessionStorage.setItem("currentUser", JSON.stringify(userData));
   }
-  
+
   return userData;
 }
 

@@ -12,6 +12,7 @@ import {
 
 import { db } from "./database";
 import { auth } from "../auth/auth";
+import { Post } from "../../../Types/Posts";
 
 const postsCollectionRef = collection(db, "posts");
 
@@ -31,7 +32,7 @@ export async function getAllPosts() {
   );
 }
 
-export async function getUserPosts(userId) {
+export async function getUserPosts(userId: string) {
   const userData = (await getDoc(doc(db, "users", userId))).data();
   const q = query(postsCollectionRef, where("user_id", "==", userId));
   const querySnapshot = await getDocs(q);
@@ -43,25 +44,25 @@ export async function getUserPosts(userId) {
   });
 }
 
-export async function getPostById(id) {
+export async function getPostById(id: string) {
   const docRef = doc(db, "posts", id);
   const docSnap = await getDoc(docRef);
   return docSnap.data();
 }
 
-export const createPost = async (post) => {
+export const createPost = async (post: Post) => {
   console.log("post from api", post);
   return await addDoc(postsCollectionRef, {
     ...post,
     created_at: Timestamp.now(),
-    user_id: auth.currentUser.uid,
+    user_id: auth?.currentUser?.uid,
     comment_ids: [],
     votes: 0,
     voter_ids: [],
   });
 };
 
-export const deletePostById = async (id) => {
+export const deletePostById = async (id: string) => {
   const docRef = doc(db, "posts", id);
   return await deleteDoc(docRef);
 };

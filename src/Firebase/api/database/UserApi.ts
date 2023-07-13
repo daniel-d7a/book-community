@@ -11,10 +11,9 @@ import {
 } from "firebase/firestore";
 import { db } from "./database";
 
-
 const userCollectionRef = collection(db, "users");
 
-export async function getUserById(id) {
+export async function getUserById(id: string) {
   const userDocRef = doc(db, "users", id);
   const userDoc = await getDoc(userDocRef);
   if (userDoc.exists()) {
@@ -25,9 +24,7 @@ export async function getUserById(id) {
   }
 }
 
-export async function creatUserAfterSignUp(id, user) {
+export async function creatUserAfterSignUp(id: string, user: any) {
   const docRef = doc(db, "users", id);
   return await setDoc(docRef, user);
 }
-
-

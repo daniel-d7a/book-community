@@ -6,11 +6,11 @@ import { auth } from "./Firebase/api/auth/auth";
 export default function TestQueries() {
   const { data: posts, status } = useQuery({
     queryKey: ["posts"],
-    queryFn: () => getUserPosts(auth.currentUser.uid),
+    queryFn: () => getUserPosts(auth?.currentUser?.uid || ""),
   });
 
   if (status === "success") {
-    console.log("user", auth.currentUser.uid);
+    console.log("user", auth?.currentUser?.uid);
     console.log("data ", posts);
   }
 

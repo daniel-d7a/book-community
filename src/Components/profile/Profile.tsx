@@ -1,3 +1,4 @@
+//@ts-check
 import DummyCard from "./atoms/dummycard";
 import StatBox from "./atoms/statBox";
 
@@ -9,6 +10,7 @@ export default function Profile() {
   const user_items = useRef(null);
 
   function scrollUserItems() {
+    //@ts-ignore
     user_items.current.scrollTo({
       top: 0,
       left: tab * 400,

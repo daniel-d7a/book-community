@@ -99,6 +99,7 @@ export default function Notifications() {
             person={person}
             action={action}
             text={text}
+            //@ts-ignore
             time={time}
           />
         ))}
