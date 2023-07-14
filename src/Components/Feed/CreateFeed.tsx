@@ -19,13 +19,18 @@ export default function CreateFeed() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm({ resolver: zodResolver(scheme) });
+  } = useForm({
+    resolver: zodResolver(scheme),
+    defaultValues: {
+      postText: "",
+    },
+  });
 
   const { mutate } = useMutation({
     mutationFn: createPost,
   });
 
-  function submit(data) {
+  function submit(data: z.infer<typeof scheme>) {
     console.log(auth.currentUser);
     // console.log(errors);
     console.log(data);

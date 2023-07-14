@@ -12,14 +12,21 @@ import {
 
 import { db } from "./database";
 import { auth } from "../auth/auth";
-import { Post } from "../../../Types/Posts";
+import { ApiPost, Post } from "../../../Types/Posts";
 
 const postsCollectionRef = collection(db, "posts");
 
 export async function getAllPosts() {
   const q = query(postsCollectionRef);
   const querySnapshot = await getDocs(q);
-  const postsData = querySnapshot.docs.map((doc) => doc.data());
+  console.log("query docs", querySnapshot.docs);
+
+  const postsData: ApiPost[] = querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    } as ApiPost;
+  });
 
   return await Promise.all(
     postsData.map(async (singlePost) => {

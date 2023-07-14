@@ -6,9 +6,10 @@ const PostsApi_1 = require("./Firebase/api/database/PostsApi");
 const auth_1 = require("./Firebase/api/auth/auth");
 function TestQueries() {
     const { data: posts, status } = (0, react_query_1.useQuery)({
-        queryKey: ["posts"],
-        queryFn: () => (0, PostsApi_1.getUserPosts)(auth_1.auth?.currentUser?.uid || ""),
+        queryKey: ["postsssssss"],
+        queryFn: PostsApi_1.getAllPosts,
     });
+    console.log("status", status);
     if (status === "success") {
         console.log("user", auth_1.auth?.currentUser?.uid);
         console.log("data ", posts);

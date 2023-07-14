@@ -11,9 +11,15 @@ import {
   BiBookReader,
   BiEditAlt,
 } from "react-icons/bi";
+import { SignUpData } from "../../Types/Auth";
+import { ApiPost } from "../../Types/Posts";
 
+type PostProps = {
+  user: SignUpData;
+  post: ApiPost;
+};
 
-export default function Post({ user, post }) {
+export default function Post({ user, post }: PostProps) {
   const [votes, setVotes] = useState(post.votes);
   const [upVoted, setUpvoted] = useState(false);
   const [downVoted, setDownvoted] = useState(false);
@@ -24,24 +30,29 @@ export default function Post({ user, post }) {
       } else if (amount === -1) {
         setDownvoted(true);
       }
+      // @ts-ignore
       post.setVotes(amount);
       setVotes(post.votes);
     } else if (upVoted && amount === 1) {
       setUpvoted(false);
+      // @ts-ignore
       post.setVotes(-amount);
       setVotes(post.votes);
     } else if (upVoted && amount === -1) {
       setUpvoted(false);
       setDownvoted(true);
+      // @ts-ignore
       post.setVotes(2 * amount);
       setVotes(post.votes);
     } else if (downVoted && amount === -1) {
       setDownvoted(false);
+      // @ts-ignore
       post.setVotes(-amount);
       setVotes(post.votes);
     } else if (downVoted && amount === 1) {
       setUpvoted(true);
       setDownvoted(false);
+      // @ts-ignore
       post.setVotes(2 * amount);
       setVotes(post.votes);
     }
@@ -52,15 +63,19 @@ export default function Post({ user, post }) {
         <div className="flex gap-4 items-center pt-4 pl-4">
           <div className="relative">
             <img
+              // @ts-ignore
               src={user.profile}
               alt="Shoes"
               className=" w-12 h-12 rounded-full object-cover"
             />
             <div
               className={`absolute bottom-0 right-0 w-5 h-5 rounded-full ${
+                // @ts-ignore
                 user.state === "r" ? "bg-teal-500" : "bg-yellow-500"
               }  text-black border-2 border-base-100 flex items-center justify-center text-[14px]`}
             >
+              {/* @ts-ignore */}
+
               {user.state === "r" ? <BiBookReader /> : <BiEditAlt />}
             </div>
           </div>
@@ -68,14 +83,19 @@ export default function Post({ user, post }) {
             <a href="#">
               {user.username || "user"} /{" "}
               <a href="#">
+                {/* @ts-ignore */}
                 {post.community.length > 15
-                  ? post.community.substring(0, 15) + "..."
-                  : post.community}
+                  ? // @ts-ignore
+                    post.community.substring(0, 15) + "..."
+                  : // @ts-ignore
+                    post.community}
               </a>
             </a>
             <div className="flex gap-2 text-xs text-zinc-400">
+              {/* @ts-ignore */}
               <p>{post.date} minutes ago</p>
               <a href="#" className="flex gap-1 items-center">
+                {/* @ts-ignore */}
                 <TfiLocationPin /> {post.location}
               </a>
             </div>
@@ -105,6 +125,7 @@ export default function Post({ user, post }) {
           <p>{post.text}</p>
         </div>
         <figure className="px-4 pt-4">
+          {/* @ts-ignore */}
           <img src={post.image} className="" />
         </figure>
         <div className="flex gap-4 items-center px-4 py-2">
@@ -128,12 +149,14 @@ export default function Post({ user, post }) {
             className="flex gap-2 items-center"
             onClick={() => (document.body.style.overflow = "hidden")}
           >
+            {/* @ts-ignore */}
             <BiCommentDetail /> {post.comments.length}
           </label>
           <BiShareAlt />
           <BiStar className="ml-auto" />
         </div>
       </div>
+      {/* @ts-ignore */}
       <Comments comms={post.comments} type="Comments" postID={post.id} />
     </>
   );

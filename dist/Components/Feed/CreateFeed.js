@@ -18,7 +18,12 @@ function CreateFeed() {
     const scheme = zod_2.z.object({
         postText: (0, zod_2.string)().min(1, { message: "post text can't be empty" }),
     });
-    const { register, handleSubmit, formState: { errors }, reset, } = (0, react_hook_form_1.useForm)({ resolver: (0, zod_1.zodResolver)(scheme) });
+    const { register, handleSubmit, formState: { errors }, reset, } = (0, react_hook_form_1.useForm)({
+        resolver: (0, zod_1.zodResolver)(scheme),
+        defaultValues: {
+            postText: "",
+        },
+    });
     const { mutate } = (0, react_query_1.useMutation)({
         mutationFn: PostsApi_1.createPost,
     });

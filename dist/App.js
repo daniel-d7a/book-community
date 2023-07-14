@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
+// @ts-nocheck
 const Home_1 = __importDefault(require("./Components/Home/Home"));
 // import Post from "./Components/Post/Post";
 const Nav_1 = __importDefault(require("./Components/Nav/Nav"));

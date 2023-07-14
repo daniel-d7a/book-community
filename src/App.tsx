@@ -1,3 +1,4 @@
+// @ts-nocheck
 import Home from "./Components/Home/Home";
 // import Post from "./Components/Post/Post";
 import Nav from "./Components/Nav/Nav";
@@ -11,7 +12,6 @@ import Login from "./Components/Login/login";
 import TestQueries from "./testQueries";
 import { auth } from "./Firebase/api/auth/auth";
 import { useEffect } from "react";
-
 
 class User {
   constructor(id, username, state, profile, starred = []) {
@@ -79,7 +79,6 @@ class Reply {
 }
 
 function App() {
-  
   const user = new User(
     1,
     "Ehab Mohamed",
@@ -106,11 +105,10 @@ function App() {
     14
   );
   const posts = Array(5).fill("post");
-  
+
   return (
     <>
       <div className="pb-14">
-        
         <Routes>
           <Route path="/" element={<Home feed={posts} />} />
           <Route path="/notifications" element={<Notifications />} />

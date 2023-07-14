@@ -8,7 +8,13 @@ const postsCollectionRef = (0, firestore_1.collection)(database_1.db, "posts");
 async function getAllPosts() {
     const q = (0, firestore_1.query)(postsCollectionRef);
     const querySnapshot = await (0, firestore_1.getDocs)(q);
-    const postsData = querySnapshot.docs.map((doc) => doc.data());
+    console.log("query docs", querySnapshot.docs);
+    const postsData = querySnapshot.docs.map((doc) => {
+        return {
+            id: doc.id,
+            ...doc.data(),
+        };
+    });
     return await Promise.all(postsData.map(async (singlePost) => {
         const userData = (await (0, firestore_1.getDoc)((0, firestore_1.doc)(database_1.db, "users", singlePost.user_id))).data();
         console.log("user data", userData);
