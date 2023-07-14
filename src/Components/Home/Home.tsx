@@ -13,7 +13,7 @@ export default function Home({ feed }) {
     window.sessionStorage.removeItem("currentUser");
     navigate("/login");
   };
-  const { data } = useQuery({
+  const { data,status } = useQuery({
     queryKey: ["currentUser"],
     queryFn: getAllPosts,
   });
@@ -26,14 +26,16 @@ export default function Home({ feed }) {
   }
 
   useEffect(() => console.log(auth.currentUser), []);
+  if (status === "loading") return(<></>)
+  if (status === 'success')
   return (
     <>
       <button onClick={logOut} className="bg-yellow-500 px-4 py-2">
         Logout
       </button>
       <CreateFeed />
-      {feed.map((post) => (
-        <Post user={post.user} post={post} />
+      {data.map((post) => (
+        <Post user={post.user_data} post={post} />
       ))}
     </>
   );
