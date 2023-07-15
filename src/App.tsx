@@ -108,12 +108,7 @@ function App() {
 
   return (
     <>
-<<<<<<< HEAD:src/App.jsx
-      <div className="">
-        
-=======
       <div className="pb-14">
->>>>>>> 5631bc76ee9f92ed9a05fbd86954ec05cebdb41f:src/App.tsx
         <Routes>
           <Route path="/" element={<Home feed={posts} />} />
           <Route path="/notifications" element={<Notifications />} />
@@ -122,7 +117,7 @@ function App() {
           <Route path="/test" element={<TestQueries />} />
         </Routes>
       </div>
-      {/* <Nav /> */}
+      <Nav />
     </>
   );
 }
