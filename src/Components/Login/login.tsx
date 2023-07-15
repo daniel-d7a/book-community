@@ -14,20 +14,7 @@ const scheme = z.object({
 });
 
 export default function Login() {
-<<<<<<< HEAD:src/Components/Login/login.jsx
-  
-  const {register, handleSubmit, formState} = useForm({resolver: zodResolver(scheme)});
-  const [wrongData, setWrongData] = useState(false)
-  
-  const {errors} = formState
-  const [check, setCheck] = useState(false)
-  const timer = useRef()
-  const navigate = useNavigate()
-  function submit(d){
-    const data = {...d, rememberMe: check}
-    // console.log(data)    
-    mutate(data)
-=======
+
   const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(scheme),
     defaultValues: {
@@ -45,7 +32,6 @@ export default function Login() {
     const data = { ...d, rememberMe: check };
     // console.log(data)
     mutate(data);
->>>>>>> 5631bc76ee9f92ed9a05fbd86954ec05cebdb41f:src/Components/Login/login.tsx
   }
   const { mutate } = useMutation({
     mutationFn: login,
