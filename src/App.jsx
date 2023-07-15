@@ -109,7 +109,7 @@ function App() {
   
   return (
     <>
-      <div className="pb-14">
+      <div className="">
         
         <Routes>
           <Route path="/" element={<Home feed={posts} />} />
@@ -119,7 +119,7 @@ function App() {
           <Route path="/test" element={<TestQueries />} />
         </Routes>
       </div>
-      <Nav />
+      {/* <Nav /> */}
     </>
   );
 }

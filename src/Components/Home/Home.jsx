@@ -6,6 +6,7 @@ import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { getAllPosts } from "../../Firebase/api/database/PostsApi";
 import { useQuery } from "@tanstack/react-query";
+import Nav from "../Nav/Nav";
 export default function Home({ feed }) {
   const navigate = useNavigate();
   const logOut = () => {
@@ -29,14 +30,14 @@ export default function Home({ feed }) {
   if (status === "loading") return(<></>)
   if (status === 'success')
   return (
-    <>
-      <button onClick={logOut} className="bg-yellow-500 px-4 py-2">
-        Logout
-      </button>
-      <CreateFeed />
-      {data.map((post) => (
-        <Post user={post.user_data} post={post} />
-      ))}
-    </>
+    <div className="bg-slate-900">
+    <Nav/>
+      <div className="px-4">
+        <CreateFeed />
+        {data.map((post) => (
+          post.user_data && <Post user={post.user_data} post={post} />
+        ))}
+      </div>
+    </div>
   );
 }
