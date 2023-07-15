@@ -14,6 +14,20 @@ const scheme = z.object({
 });
 
 export default function Login() {
+<<<<<<< HEAD:src/Components/Login/login.jsx
+  
+  const {register, handleSubmit, formState} = useForm({resolver: zodResolver(scheme)});
+  const [wrongData, setWrongData] = useState(false)
+  
+  const {errors} = formState
+  const [check, setCheck] = useState(false)
+  const timer = useRef()
+  const navigate = useNavigate()
+  function submit(d){
+    const data = {...d, rememberMe: check}
+    // console.log(data)    
+    mutate(data)
+=======
   const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(scheme),
     defaultValues: {
@@ -31,6 +45,7 @@ export default function Login() {
     const data = { ...d, rememberMe: check };
     // console.log(data)
     mutate(data);
+>>>>>>> 5631bc76ee9f92ed9a05fbd86954ec05cebdb41f:src/Components/Login/login.tsx
   }
   const { mutate } = useMutation({
     mutationFn: login,
@@ -64,27 +79,25 @@ export default function Login() {
   }, [timer]);
 
   return (
-    <div className="relative bg-base-200 h-[100vh] w-full flex flex-col md:flex-row md:justify-end justify-center items-center py-10 md:px-0">
-      <img
-        className="absolute contrast-125 object-cover object-left w-full h-full "
-        src="https://source.unsplash.com/UsEHH1sd4rE"
-      />
-      <div className="md:w-2/5 py-6 md:mr-10 px-6 mx-6 relative z-10 backdrop-blur-sm">
-        <h2 className="text-4xl md:text-5xl font-semibold mb-16 md:mb-8 md:text-center">
+    <div className="relative bg-slate-900 h-screen w-full flex items-center justify-center py-10 md:px-0">
+
+      <div className="md:w-2/5 bg-slate-950 w-full rounded-lg flex flex-col items-center py-6 md:mr-10 px-6 mx-6 relative z-10 backdrop-blur-sm">
+        <h2 className="text-3xl font-bold mb-2 md:text-center">
           Log In
         </h2>
-        <form onSubmit={handleSubmit(submit)} className="space-y-4">
+        <p className="font-light text-center mb-6">Don't have an account? <span onClick={()=>navigate("/signup")} className="text-yellow-500">Sign Up</span></p>
+        <form onSubmit={handleSubmit(submit)} className="space-y-2 w-full">
           <input
             type="text"
             placeholder="Email"
-            className="input input-bordered w-full py-8 md:py-6"
+            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
             {...register("email")}
           />
           <div className="text-red-600">{String(errors.email?.message)}</div>
           <input
             type="password"
             placeholder="Password"
-            className="input input-bordered w-full py-8 md:py-6"
+            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
             {...register("password")}
           />
           <div className="text-red-600">{String(errors.password?.message)}</div>
@@ -103,7 +116,7 @@ export default function Login() {
           </div>
           <button
             type="submit"
-            className="text-lg font-semibold bg-base-300 w-full py-5 md:py-3"
+            className="text-lg font-semibold rounded-sm w-full py-3 bg-yellow-500"
           >
             Log In
           </button>
@@ -128,13 +141,10 @@ export default function Login() {
             <span>Wrong email or password</span>
           </div>
           <p className="text-center font-light">or sign up with</p>
-          <button className="text-lg flex justify-center font-semibold bg-base-300 w-full py-3.5 md:py-3">
+          <button className="text-lg flex justify-center font-semibold bg-slate-900 rounded-sm w-full py-2 md:py-3">
             <AiOutlineGoogle className="text-4xl md:text-3xl" />
           </button>
         </form>
-        <p className="font-light text-center mt-10 md:mt-14">
-          Don't have an account? <span className="font-semibold">Sign Up</span>
-        </p>
       </div>
     </div>
   );
