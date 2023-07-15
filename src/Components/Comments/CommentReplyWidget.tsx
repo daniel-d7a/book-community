@@ -18,7 +18,7 @@ export default function CommentReplyWidget({ type, comms, postID }) {
         <div className="modal-box px-0 pb-0 bg-slate-700">
           <h3 className="font-bold text-lg mb-4 ml-8">{type}</h3>
           <div className="overflow-y-scroll w-full max-h-72 flex flex-wrap justify-center gap-2">
-            {comms.map((comm) => (
+            {comms && comms.map((comm) => (
               <Comment type={type} user={comm.user} comment={comm} />
             ))}
           </div>

@@ -108,7 +108,7 @@ function App() {
 
   return (
     <>
-      <div className="">
+      <div className="mb-0 overflow-hidden">
         <Routes>
           <Route path="/" element={<Home feed={posts} />} />
           <Route path="/notifications" element={<Notifications />} />

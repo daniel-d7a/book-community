@@ -10,6 +10,8 @@ import { string, z } from "zod";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BiCalendar, BiImage, BiVideo } from "react-icons/bi";
 
+
+
 export default function CreateFeed() {
   const scheme = z.object({
     postText: string().min(1, { message: "post text can't be empty" }),
@@ -40,27 +42,23 @@ export default function CreateFeed() {
   }
 
   return (
-    <div className="w-full bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
-      <div className="flex gap-2">
-        <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
-          <img
-            src={
-              auth.currentUser?.profile
-                ? auth.currentUser.profile
-                : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
-            }
-            className="w-full object-cover "
-          />
-        </div>
-        <div className="w-full mb-4">
-          <form onSubmit={handleSubmit(submit)} className="w-full">
-            <textarea
-              {...register("postText")}
-              placeholder="Add a post"
-              className="focus:outline-none bg-slate-900 max-h-64 p-2 rounded-md h-28 resize-none transition-all w-full"
-            ></textarea>
-
-            <div className="text-red-600">{errors.postText?.message}</div>
+    <div className="max-w-2xl mx-auto w-full bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
+          <div className="flex gap-2">
+            <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
+              <img
+                src={auth.currentUser.profile?auth.currentUser.profile:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}
+                className="w-full object-cover "
+              />
+            </div>
+            <div className="w-full mb-4">
+              <form onSubmit={handleSubmit(submit)} className="w-full">
+                <textarea
+                  {...register("postText")}
+                  placeholder="Add a post"
+                  className="focus:outline-none bg-slate-900 max-h-64 p-2 rounded-md h-28 resize-none transition-all w-full"
+                ></textarea>
+                
+                <div className="text-red-600">{errors.postText?.message}</div>
 
             <button
               type="submit"
