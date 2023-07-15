@@ -42,7 +42,7 @@ export default function CreateFeed() {
   }
 
   return (
-    <div className="w-full bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
+    <div className="max-w-2xl mx-auto w-full bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
           <div className="flex gap-2">
             <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
               <img
