@@ -35,7 +35,7 @@ export default function Home() {
   if (status === "loading") return <></>;
   if (status === "success")
     return (
-      <div className="bg-slate-900">
+      <div className="bg-slate-900 mb-0 overflow-hidden">
         <Nav />
         <div className="px-4">
           <CreateFeed />
