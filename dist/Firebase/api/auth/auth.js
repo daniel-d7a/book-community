@@ -10,7 +10,7 @@ exports.auth = (0, auth_1.getAuth)(fireBaseConfig_1.app);
 console.log("logged in user", exports.auth.currentUser);
 async function signup(user) {
     const { user: { uid }, } = await (0, auth_2.createUserWithEmailAndPassword)(exports.auth, user.email, user.password);
-    return await (0, UserApi_1.creatUserAfterSignUp)(uid, user);
+    return await (0, UserApi_1.createUserAfterSignUp)(uid, user);
 }
 exports.signup = signup;
 async function login(data) {

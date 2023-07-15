@@ -2,17 +2,20 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsx_runtime_1 = require("react/jsx-runtime");
 const react_query_1 = require("@tanstack/react-query");
-const PostsApi_1 = require("./Firebase/api/database/PostsApi");
-const auth_1 = require("./Firebase/api/auth/auth");
+const CommentsApi_1 = require("./Firebase/api/database/CommentsApi");
 function TestQueries() {
-    const { data: posts, status } = (0, react_query_1.useQuery)({
-        queryKey: ["postsssssss"],
-        queryFn: PostsApi_1.getAllPosts,
+    const { data, status } = (0, react_query_1.useQuery)({
+        queryKey: ["test query"],
+        queryFn: () => (0, CommentsApi_1.getPostComments)("LNWILmPxsx4KW2kNprLx"),
     });
-    console.log("status", status);
+    // const { mutate, status, data } = useMutation({
+    //   mutationFn: ({ postId, text }: { postId: string; text: string }) =>
+    //     addComment(postId, text),
+    // });
+    if (status === "loading")
+        return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
     if (status === "success") {
-        console.log("user", auth_1.auth?.currentUser?.uid);
-        console.log("data ", posts);
+        console.log("data", data);
     }
     return ((0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, { children: (0, jsx_runtime_1.jsx)("p", { children: "data" }) }));
 }

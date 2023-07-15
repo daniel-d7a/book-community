@@ -12,4 +12,5 @@ const react_router_dom_1 = require("react-router-dom");
 const recoil_1 = require("recoil");
 const react_query_1 = require("@tanstack/react-query");
 const queryClient = new react_query_1.QueryClient();
+// this is a new comment
 client_1.default.createRoot(document.getElementById("root")).render((0, jsx_runtime_1.jsx)(react_1.default.StrictMode, { children: (0, jsx_runtime_1.jsx)(react_query_1.QueryClientProvider, { client: queryClient, children: (0, jsx_runtime_1.jsx)(recoil_1.RecoilRoot, { children: (0, jsx_runtime_1.jsx)(react_router_dom_1.BrowserRouter, { children: (0, jsx_runtime_1.jsx)(App_1.default, {}) }) }) }) }));

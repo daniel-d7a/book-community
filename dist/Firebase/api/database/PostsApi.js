@@ -28,6 +28,7 @@ async function getUserPosts(userId) {
     const querySnapshot = await (0, firestore_1.getDocs)(q);
     return querySnapshot.docs.map((doc) => {
         return {
+            id: doc.id,
             ...doc.data(),
             user_data: userData,
         };
@@ -37,12 +38,18 @@ exports.getUserPosts = getUserPosts;
 async function getPostById(id) {
     const docRef = (0, firestore_1.doc)(database_1.db, "posts", id);
     const docSnap = await (0, firestore_1.getDoc)(docRef);
-    return docSnap.data();
+    const docData = docSnap.data();
+    const userData = (await (0, firestore_1.getDoc)((0, firestore_1.doc)(database_1.db, "users", docData?.user_id))).data();
+    return {
+        id: docSnap.id,
+        ...docData,
+        user_data: userData,
+    };
 }
 exports.getPostById = getPostById;
-const createPost = async (post) => {
+async function createPost(post) {
     console.log("post from api", post);
-    return await (0, firestore_1.addDoc)(postsCollectionRef, {
+    const newPostId = await (0, firestore_1.addDoc)(postsCollectionRef, {
         ...post,
         created_at: firestore_1.Timestamp.now(),
         user_id: auth_1.auth?.currentUser?.uid,
@@ -50,10 +57,11 @@ const createPost = async (post) => {
         votes: 0,
         voter_ids: [],
     });
-};
+    return newPostId.id;
+}
 exports.createPost = createPost;
-const deletePostById = async (id) => {
+async function deletePostById(id) {
     const docRef = (0, firestore_1.doc)(database_1.db, "posts", id);
     return await (0, firestore_1.deleteDoc)(docRef);
-};
+}
 exports.deletePostById = deletePostById;

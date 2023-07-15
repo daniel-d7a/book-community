@@ -12,6 +12,7 @@ const react_router_dom_1 = require("react-router-dom");
 const react_router_dom_2 = require("react-router-dom");
 const PostsApi_1 = require("../../Firebase/api/database/PostsApi");
 const react_query_1 = require("@tanstack/react-query");
+const Nav_1 = __importDefault(require("../Nav/Nav"));
 function Home() {
     const navigate = (0, react_router_dom_2.useNavigate)();
     const logOut = () => {
@@ -32,6 +33,6 @@ function Home() {
     if (status === "loading")
         return (0, jsx_runtime_1.jsx)(jsx_runtime_1.Fragment, {});
     if (status === "success")
-        return ((0, jsx_runtime_1.jsxs)(jsx_runtime_1.Fragment, { children: [(0, jsx_runtime_1.jsx)("button", { onClick: logOut, className: "bg-yellow-500 px-4 py-2", children: "Logout" }), (0, jsx_runtime_1.jsx)(CreateFeed_1.default, {}), data.map((post) => ((0, jsx_runtime_1.jsx)(Post_1.default, { user: post.user_data, post: post })))] }));
+        return ((0, jsx_runtime_1.jsxs)("div", { className: "bg-slate-900", children: [(0, jsx_runtime_1.jsx)(Nav_1.default, {}), (0, jsx_runtime_1.jsxs)("div", { className: "px-4", children: [(0, jsx_runtime_1.jsx)(CreateFeed_1.default, {}), data.map((post) => post.user_data && (0, jsx_runtime_1.jsx)(Post_1.default, { user: post.user_data, post: post }))] })] }));
 }
 exports.default = Home;
