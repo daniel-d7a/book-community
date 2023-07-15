@@ -10,12 +10,6 @@ import {
   BiUpvote,
   BiDownvote,
   BiSend,
-  BiCommentDetail,
-  BiShareAlt,
-  BiStar,
-  BiDotsHorizontalRounded,
-  BiBookReader,
-  BiEditAlt,
 } from "react-icons/bi";
 import CommentBody from "./CommentBody";
 export default function Comment({ user, comment, type, commID }) {

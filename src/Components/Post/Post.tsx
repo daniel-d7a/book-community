@@ -4,6 +4,9 @@ import { useState } from "react"
 import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
 import { SignUpData } from "../../Types/Auth"
 import { ApiPost } from "../../Types/Posts"
+import { useQuery } from "@tanstack/react-query";
+import { getPostComments } from "../../Firebase/api/database/CommentsApi"
+import CommentsContent from "../Comments/CommentsContent"
 
 type PostProps = {
   user: SignUpData,
@@ -11,6 +14,8 @@ type PostProps = {
 }
 
 export default function Post({user, post} : PostProps) {
+    const[displayComms, setDisplayComms] = useState(false)
+
     const[votes, setVotes] = useState(post.votes)
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
@@ -92,10 +97,11 @@ export default function Post({user, post} : PostProps) {
         </figure>}
         <div className="flex gap-4 items-center px-4 py-2">
             <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{handleclick(1)}}/> <span className="text-sm">{`Votes (${votes})`}</span> <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
-            <label htmlFor={`comments_${post.id}`} className="flex gap-2 items-center" onClick={()=>document.body.style.overflow = 'hidden'}><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
+            <label htmlFor={`comments_${post.id}`} className="flex gap-2 items-center" onClick={()=> setDisplayComms(true)} ><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
             <BiShareAlt/>
             <BiStar className="ml-auto"/>
         </div>
+        {displayComms && <CommentsContent postID={post.id}/>}
         </div>
         {/* <Comments comms={post.comments} type="Comments" postID={post.id}/> */}
     </>)
