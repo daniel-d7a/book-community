@@ -2,18 +2,26 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getAllPosts, getUserPosts } from "./Firebase/api/database/PostsApi";
 import { getCurrentUser, logout } from "./Firebase/api/auth/auth";
 import { auth } from "./Firebase/api/auth/auth";
+import {
+  addComment,
+  getPostComments,
+} from "./Firebase/api/database/CommentsApi";
 
 export default function TestQueries() {
-  const { data: posts, status } = useQuery({
-    queryKey: ["postsssssss"],
-    queryFn: getAllPosts,
+  const { data, status } = useQuery({
+    queryKey: ["test query"],
+    queryFn: () => getPostComments("LNWILmPxsx4KW2kNprLx"),
   });
 
-  console.log("status", status);
-  
+  // const { mutate, status, data } = useMutation({
+  //   mutationFn: ({ postId, text }: { postId: string; text: string }) =>
+  //     addComment(postId, text),
+  // });
+
+  if (status === "loading") return <></>;
+
   if (status === "success") {
-    console.log("user", auth?.currentUser?.uid);
-    console.log("data ", posts);
+    console.log("data", data);
   }
 
   return (
@@ -23,19 +31,12 @@ export default function TestQueries() {
         className="btn"
         onClick={() => {
           mutate({
-            text: "new test",
+            postId: "LNWILmPxsx4KW2kNprLx",
+            text: "بحب اياد",
           });
         }}
       >
         try query
-      </button>
-      <button
-        className="btn"
-        onClick={() => {
-          mutate();
-        }}
-      >
-        logout
       </button> */}
     </>
   );

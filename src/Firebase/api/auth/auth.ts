@@ -8,7 +8,7 @@ import {
   browserLocalPersistence,
   browserSessionPersistence,
 } from "firebase/auth";
-import { creatUserAfterSignUp } from "../database/UserApi";
+import { createUserAfterSignUp } from "../database/UserApi";
 import { LoginData, SignUpData } from "../../../Types/Auth";
 
 // TODO: add try catches to catch errors
@@ -20,7 +20,7 @@ export async function signup(user: SignUpData) {
   const {
     user: { uid },
   } = await createUserWithEmailAndPassword(auth, user.email, user.password);
-  return await creatUserAfterSignUp(uid, user);
+  return await createUserAfterSignUp(uid, user);
 }
 export async function login(data: LoginData) {
   if (data.rememberMe) {

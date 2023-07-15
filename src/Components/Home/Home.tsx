@@ -41,7 +41,7 @@ export default function Home() {
           <CreateFeed />
           {data.map(
             (post) =>
-              post.user_data && <Post user={post.user_data} post={post} />
+              post.user_data && <Post user={post.user_data as SignUpData} post={post as ApiPostS} />
           )}
         </div>
       </div>
