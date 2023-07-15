@@ -14,6 +14,8 @@ import { db } from "./database";
 import { auth } from "../auth/auth";
 import { ApiPost, Post } from "../../../Types/Posts";
 
+//TODO: add return types
+
 const postsCollectionRef = collection(db, "posts");
 
 export async function getAllPosts() {
