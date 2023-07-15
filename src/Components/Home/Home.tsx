@@ -32,17 +32,18 @@ export default function Home() {
   }
 
   useEffect(() => console.log(auth.currentUser), []);
-  if (status === "loading") return(<></>)
-  if (status === 'success')
-  return (
-    <div className="bg-slate-900">
-    <Nav/>
-      <div className="px-4">
-        <CreateFeed />
-        {data.map((post) => (
-          post.user_data && <Post user={post.user_data} post={post} />
-        ))}
+  if (status === "loading") return <></>;
+  if (status === "success")
+    return (
+      <div className="bg-slate-900">
+        <Nav />
+        <div className="px-4">
+          <CreateFeed />
+          {data.map(
+            (post) =>
+              post.user_data && <Post user={post.user_data as SignUpData} post={post as ApiPost} />
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
 }

@@ -79,6 +79,7 @@ export default function Login() {
             className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
             {...register("email")}
           />
+          {/* TODO: REMOVE THIS ERROR WHEN THE FORM LOADS FIRST TIME AND SHOW IT ONLY WHEN I SUBMIT WHILE SOMETHING WRONG*/}
           <div className="text-red-600">{String(errors.email?.message)}</div>
           <input
             type="password"
