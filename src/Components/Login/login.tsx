@@ -14,7 +14,6 @@ const scheme = z.object({
 });
 
 export default function Login() {
-
   const { register, handleSubmit, formState } = useForm({
     resolver: zodResolver(scheme),
     defaultValues: {
@@ -66,12 +65,14 @@ export default function Login() {
 
   return (
     <div className="relative bg-slate-900 h-screen w-full flex items-center justify-center py-10 md:px-0">
-
       <div className="md:w-2/5 bg-slate-950 w-full rounded-lg flex flex-col items-center py-6 md:mr-10 px-6 mx-6 relative z-10 backdrop-blur-sm">
-        <h2 className="text-3xl font-bold mb-2 md:text-center">
-          Log In
-        </h2>
-        <p className="font-light text-center mb-6">Don't have an account? <span onClick={()=>navigate("/signup")} className="text-yellow-500">Sign Up</span></p>
+        <h2 className="text-3xl font-bold mb-2 md:text-center">Log In</h2>
+        <p className="font-light text-center mb-6">
+          Don't have an account?{" "}
+          <span onClick={() => navigate("/signup")} className="text-yellow-500">
+            Sign Up
+          </span>
+        </p>
         <form onSubmit={handleSubmit(submit)} className="space-y-2 w-full">
           <input
             type="text"

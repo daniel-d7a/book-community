@@ -47,11 +47,12 @@ export default function SignUp() {
       <div className="md:w-2/5 bg-slate-950 rounded-lg flex flex-col items-center py-6 md:mr-10 px-6 mx-6 relative z-10 backdrop-blur-sm">
         {isLoading && <p>Loading...</p>}
 
-        <h2 className="text-3xl font-bold mb-2 md:text-center">
-          Sign Up
-        </h2>
+        <h2 className="text-3xl font-bold mb-2 md:text-center">Sign Up</h2>
         <p className="font-light text-center mb-6">
-          Already have an account? <span className="text-yellow-500" onClick={()=>navigate("/login")}>Log In</span>
+          Already have an account?{" "}
+          <span className="text-yellow-500" onClick={() => navigate("/login")}>
+            Log In
+          </span>
         </p>
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
           <input
