@@ -19,7 +19,7 @@ const postsCollectionRef = collection(db, "posts");
 export async function getAllPosts(): Promise<ApiPost[]> {
   const q = query(postsCollectionRef);
   const querySnapshot = await getDocs(q);
-  console.log("query docs", querySnapshot.docs);
+  // console.log("query docs", querySnapshot.docs);
 
   const postsData: ApiPost[] = querySnapshot.docs.map((doc) => {
     return {
@@ -33,7 +33,7 @@ export async function getAllPosts(): Promise<ApiPost[]> {
       const userData = (
         await getDoc(doc(db, "users", singlePost.user_id))
       ).data();
-      console.log("user data", userData);
+      // console.log("user data", userData);
       return { ...singlePost, user_data: userData } as ApiPost;
     })
   );

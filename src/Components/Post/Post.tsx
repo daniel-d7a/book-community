@@ -15,7 +15,6 @@ type PostProps = {
 
 export default function Post({user, post} : PostProps) {
     const[displayComms, setDisplayComms] = useState(false)
-
     const[votes, setVotes] = useState(post.votes)
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
@@ -71,7 +70,7 @@ export default function Post({user, post} : PostProps) {
                 </div>
             </div>
             <div className="text-sm">
-                <a href="#" className="text-lg font-bold">{user.username || "user"} {post.community && "/"} <a href="#">{post.community && post.community.length > 15? post.community.substring(0,15) + '...' : post.community}</a></a>
+                <a href="#" className="text-lg font-bold">{user.username || "user"}</a>{post.community && "/"}<a href="#">{post.community && post.community.length > 15? post.community.substring(0,15) + '...' : post.community}</a>
                 <div className="flex gap-2 text-xs text-zinc-400">
                     <p>{getDate(post.created_at)}</p>
                     {post.location && <a href="#" className="flex gap-1 items-center"><TfiLocationPin/> {post.location}</a>}
@@ -97,7 +96,9 @@ export default function Post({user, post} : PostProps) {
         </figure>}
         <div className="flex gap-4 items-center px-4 py-2">
             <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{handleclick(1)}}/> <span className="text-sm">{`Votes (${votes})`}</span> <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
-            <label htmlFor={`comments_${post.id}`} className="flex gap-2 items-center" onClick={()=> setDisplayComms(true)} ><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
+            <label htmlFor={`comments_${post.id}`} className="flex gap-2 items-center" onClick={()=> {
+                console.log(post.id)
+                setDisplayComms(true)}} ><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
             <BiShareAlt/>
             <BiStar className="ml-auto"/>
         </div>
