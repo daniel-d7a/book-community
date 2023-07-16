@@ -13,7 +13,7 @@ export default function Nav() {
     };
 
     return(<>
-        <div className="navbar justify-between bg-slate-950 sticky mb-4 z-30">
+        <div className="navbar justify-between bg-slate-950 fixed top-0 mb-4 z-30">
             <div onClick={()=>navigate("/")} className="w-9 h-9 flex items-center justify-center text-lg font-bold rounded-sm bg-yellow-500">
                 <BiBookOpen/>
             </div>

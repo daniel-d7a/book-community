@@ -14,7 +14,6 @@ import { LoginData, SignUpData } from "../../../Types/Auth";
 // TODO: add try catches to catch errors
 
 export const auth = getAuth(app);
-console.log("logged in user", auth.currentUser);
 
 export async function signup(user: SignUpData) {
   const {
