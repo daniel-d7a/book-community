@@ -8,6 +8,7 @@ import {
   addDoc,
   deleteDoc,
   Timestamp,
+  orderBy,
 } from "firebase/firestore";
 
 import { db } from "./database";
@@ -17,7 +18,7 @@ import { ApiPost, Post } from "../../../Types/Posts";
 const postsCollectionRef = collection(db, "posts");
 
 export async function getAllPosts(): Promise<ApiPost[]> {
-  const q = query(postsCollectionRef);
+  const q = query(postsCollectionRef, orderBy("created_at", "desc"));
   const querySnapshot = await getDocs(q);
   // console.log("query docs", querySnapshot.docs);
 
