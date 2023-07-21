@@ -10,10 +10,19 @@ import {
   updateDoc,
   arrayUnion,
 } from "firebase/firestore";
+import { ApiReply } from "../../../Types/Replies";
 
 const replyCollectionRef = collection(db, "replies");
 
-export async function getCommentReplies(commentId: string) {
+/**
+ * Retrieves the replies to a comment.
+ *
+ * @param {string} commentId - The ID of the comment.
+ * @return {Promise<ApiReply[]>} A promise that resolves with an array of reply objects.
+ */
+export async function getCommentReplies(
+  commentId: string
+): Promise<ApiReply[]> {
   const docRef = doc(db, "comments", commentId);
   const docSnap = await getDoc(docRef);
   const replyIds = docSnap.data()?.reply_ids;
