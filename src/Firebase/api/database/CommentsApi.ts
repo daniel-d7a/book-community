@@ -13,6 +13,12 @@ import { ApiComment } from "../../../Types/Comments";
 
 const commentsCollectionRef = collection(db, "comments");
 
+/**
+ * Retrieves the comments for a specific post.
+ *
+ * @param {string} postId - The ID of the post.
+ * @return {Promise<ApiComment[]>} A promise that resolves to an array of comment data for the post.
+ */
 export async function getPostComments(postId: string): Promise<ApiComment[]> {
   const docRef = doc(db, "posts", postId);
   const docSnap = await getDoc(docRef);
@@ -35,6 +41,13 @@ export async function getPostComments(postId: string): Promise<ApiComment[]> {
   );
 }
 
+/**
+ * Adds a comment to a post.
+ *
+ * @param {string} postId - The ID of the post to add the comment to.
+ * @param {string} commentText - The text of the comment.
+ * @return {Promise<void>} - A promise that resolves when the comment is added.
+ */
 export async function addComment(
   postId: string,
   commentText: string

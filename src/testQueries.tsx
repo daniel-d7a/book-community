@@ -1,27 +1,23 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getAllPosts, getUserPosts } from "./Firebase/api/database/PostsApi";
-import { getCurrentUser, logout } from "./Firebase/api/auth/auth";
-import { auth } from "./Firebase/api/auth/auth";
 import {
-  addComment,
-  getPostComments,
-} from "./Firebase/api/database/CommentsApi";
+  addReply,
+  getCommentReplies,
+} from "./Firebase/api/database/RepliesApi";
 
 export default function TestQueries() {
   const { data, status } = useQuery({
     queryKey: ["test query"],
-    queryFn: () => getPostComments("LNWILmPxsx4KW2kNprLx"),
+    queryFn: () => getCommentReplies("HENbVpa0vf15Bla5Fio0"),
   });
 
-  // const { mutate, status, data } = useMutation({
-  //   mutationFn: ({ postId, text }: { postId: string; text: string }) =>
-  //     addComment(postId, text),
+  // const { mutate, status } = useMutation({
+  //   mutationFn: ({ commentId, text }: { commentId: string; text: string }) =>
+  //     addReply(commentId, text),
   // });
 
   if (status === "loading") return <></>;
-
   if (status === "success") {
-    console.log("data", data);
+    console.log(data);
   }
 
   return (
@@ -31,12 +27,12 @@ export default function TestQueries() {
         className="btn"
         onClick={() => {
           mutate({
-            postId: "LNWILmPxsx4KW2kNprLx",
-            text: "بحب اياد",
+            commentId: "HENbVpa0vf15Bla5Fio0",
+            text: "me three <3",
           });
         }}
       >
-        try query
+        test
       </button> */}
     </>
   );
