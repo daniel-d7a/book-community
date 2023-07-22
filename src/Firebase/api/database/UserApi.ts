@@ -11,6 +11,8 @@ import {
 } from "firebase/firestore";
 import { db } from "./database";
 import { SignUpData } from "../../../Types/Auth";
+import { storage } from "./database";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 
 const userCollectionRef = collection(db, "users");
 
@@ -44,4 +46,14 @@ export async function createUserAfterSignUp(
 ): Promise<void> {
   const docRef = doc(db, "users", id);
   return await setDoc(docRef, user);
+}
+
+export async function uploadProfilePhoto(image: File) {
+  const storageRef = ref(storage, "profilePhotos-user1");
+  return await uploadBytes(storageRef, image);
+}
+
+export async function getProfilePhoto() {
+  const storageRef = ref(storage, "profilePhotos-user1");
+  return await getDownloadURL(storageRef);
 }

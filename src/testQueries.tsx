@@ -1,18 +1,24 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useRef } from "react";
 import {
   addReply,
   getCommentReplies,
 } from "./Firebase/api/database/RepliesApi";
+import {
+  getProfilePhoto,
+  uploadProfilePhoto,
+} from "./Firebase/api/database/UserApi";
 
 export default function TestQueries() {
   const { data, status } = useQuery({
     queryKey: ["test query"],
-    queryFn: () => getCommentReplies("HENbVpa0vf15Bla5Fio0"),
+    queryFn: () => getProfilePhoto(),
   });
 
-  // const { mutate, status } = useMutation({
-  //   mutationFn: ({ commentId, text }: { commentId: string; text: string }) =>
-  //     addReply(commentId, text),
+  const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  // const { mutate, status, data } = useMutation({
+  //   mutationFn: () => uploadProfilePhoto(fileRef?.current?.files?.[0]),
   // });
 
   if (status === "loading") return <></>;
@@ -23,16 +29,21 @@ export default function TestQueries() {
   return (
     <>
       <p>data</p>
+      <input
+        onChange={() => {
+          console.log("fileref ", fileRef?.current?.files?.[0]);
+        }}
+        ref={fileRef}
+        type="file"
+      />
+      <img src={data} />
       {/* <button
         className="btn"
         onClick={() => {
-          mutate({
-            commentId: "HENbVpa0vf15Bla5Fio0",
-            text: "me three <3",
-          });
+          mutate();
         }}
       >
-        test
+        upload
       </button> */}
     </>
   );
