@@ -4,7 +4,7 @@ import CommentContentBody from "./CommentContentBody";
 
 export default function CommentsContent({postID}) {
     const { data, status } = useQuery({
-        queryKey: ["commsForPost"],
+        queryKey: ["commsForPost",postID],
         queryFn: ()=> getPostComments(postID),
     });
     console.log(postID)
