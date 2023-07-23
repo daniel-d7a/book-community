@@ -1,5 +1,5 @@
 export default function CommentContentBody({comment}) {
-    return(<>
-        {comment.text}
-    </>)
+    return(
+        <p>{comment.text}</p>
+    )
 }
