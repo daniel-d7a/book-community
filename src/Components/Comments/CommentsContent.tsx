@@ -1,8 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { getPostComments } from "../../Firebase/api/database/CommentsApi"
 import CommentContentBody from "./CommentContentBody";
+import { useState } from "react";
 
 export default function CommentsContent({postID}) {
+    const {comms, setComms} = useState(null);
     const { data, status } = useQuery({
         queryKey: ["commsForPost",postID],
         queryFn: ()=> getPostComments(postID),
@@ -18,12 +20,10 @@ export default function CommentsContent({postID}) {
         <span className="sr-only">Loading...</span>
     </div>)
     }
-    if (status === "success"){
         return(<>
-                {data && data.map(comm => {
-                    <CommentContentBody comment={comm}/>
-                })}
-            </>)
-        }
+            {data?.length > 0 ? data?.map(item => <CommentContentBody key={item.id} comment={item}/>):<p>no comments yet</p>}
+        </>
+        )
+    
     }
     
