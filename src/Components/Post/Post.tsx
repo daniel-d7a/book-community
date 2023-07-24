@@ -64,9 +64,9 @@ export default function Post({user, post} : PostProps) {
         <div className="rounded-md pb-4 bg-slate-950 max-w-2xl mx-auto w-fullshadow-xl mb-4">
         <div className="flex gap-4 items-center pt-4 pl-4">
             <div className="relative">
-                <img src={user && user.profile? user.profile : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />
-                <div className={`absolute bottom-0 right-0 w-5 h-5 rounded-full ${user.state ==="r"? "bg-teal-500": "bg-yellow-500"}  text-black border-2 border-base-100 flex items-center justify-center text-[14px]`}>
-                    {user.state === "r"? <BiBookReader/> : <BiEditAlt/>}
+                <img src={user && user.profile_photo? user.profile_photo : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />
+                <div className={`absolute bottom-0 right-0 w-5 h-5 rounded-full ${user.type ==="r"? "bg-blue-600": "bg-yellow-500"}  text-black border-2 border-base-100 flex items-center justify-center text-[14px]`}>
+                    {user.type === "r"? <BiBookReader/> : <BiEditAlt/>}
                 </div>
             </div>
             <div className="text-sm">

@@ -2,6 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { getPostComments } from "../../Firebase/api/database/CommentsApi"
 import CommentContentBody from "./CommentContentBody";
 import { useState } from "react";
+import { BiSend } from "react-icons/bi";
+import { auth } from "../../Firebase/api/auth/auth";
+import { BsSendFill } from "react-icons/bs";
 
 export default function CommentsContent({postID}) {
     const {comms, setComms} = useState(null);
@@ -20,9 +23,27 @@ export default function CommentsContent({postID}) {
         <span className="sr-only">Loading...</span>
     </div>)
     }
-        return(<>
-            {data?.length > 0 ? data?.map(item => <CommentContentBody key={item.id} comment={item}/>):<p>no comments yet</p>}
-        </>
+        return(<div className="px-2">    
+            <div className="flex gap-2 mt-2">
+                <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
+                <img
+                    src={auth.currentUser?.profile_photo?auth.currentUser.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}
+                    className="w-full object-cover "
+                />
+                </div>
+                <form className="w-full bg-slate-900 h-10 rounded-md flex">
+                        <textarea
+                        placeholder="Add a comment"
+                        className="focus:outline-none bg-transparent  max-h-64 p-2 pl-3 rounded-md h-10 resize-none transition-all w-full"
+                        >
+                        </textarea>
+                        <button type="submit" className="mr-3 text-xl text-yellow-500"><BsSendFill/></button>
+                    
+                </form>
+            </div>
+            
+            {data?.length > 0 ? data?.map(item => <CommentContentBody key={item.id} comment={item}/>):<div className="w-full flex items-center justify-center mt-2"><p className="mx-auto">no comments yet</p></div>}
+        </div>
         )
     
     }

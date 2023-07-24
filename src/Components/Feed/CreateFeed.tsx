@@ -46,7 +46,7 @@ export default function CreateFeed() {
           <div className="flex gap-2">
             <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
               <img
-                src={auth.currentUser.profile?auth.currentUser.profile:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}
+                src={auth.currentUser.profile_photo?auth.currentUser.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}
                 className="w-full object-cover "
               />
             </div>

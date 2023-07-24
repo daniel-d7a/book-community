@@ -3,6 +3,7 @@ import {BiHomeAlt,BiSearch,BiUser,BiBell, BiBookOpen, BiMenu, BiChat, BiPowerOff
 import { HiOutlineViewList } from 'react-icons/hi'
 import { TfiSettings } from 'react-icons/tfi'
 import { Link, useNavigate } from 'react-router-dom'
+import { auth } from '../../Firebase/api/auth/auth'
 export default function Nav() {
     const navigate = useNavigate()
     const [tools, setTools] = useState(false)
@@ -24,12 +25,12 @@ export default function Nav() {
                 <div className='w-9 h-9 flex items-center justify-center rounded-sm text-lg bg-slate-900'><TfiSettings/></div>
                 <div className='w-9 h-9 flex items-center justify-center rounded-sm text-lg bg-slate-900'><BiBell/></div>
                 <div onClick={()=>setTools(!tools)} className='w-9 h-9 flex items-center justify-center rounded-sm text-lg bg-slate-900 overflow-hidden'>
-                    <img src={"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}/>
+                    <img src={auth.currentUser?.profile_photo?auth.currentUser.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"}/>
                 </div>
                 <div className={`absolute top-14 right-3 w-60 p-4 bg-slate-950 rounded-md ${tools?"":"invisible"}`}>
                     <div className='flex flex-col gap-2'>
                         <div className='flex gap-4'>
-                            <img src={"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />
+                            <img src={auth.currentUser?.profile_photo?auth.currentUser.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />
                             <div className='flex flex-col'>
                                 <p className='font-bold'>Ehab Mohammed</p>
                                 <p className='text-sm text-gray-400'>Reader</p>

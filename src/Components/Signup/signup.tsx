@@ -80,6 +80,18 @@ export default function SignUp() {
             className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
             {...register("confirmPassword", { required: true })}
           />
+          <div className="form-control mb-0">
+            <label className="label cursor-pointer">
+              <span className="label-text">Writer</span> 
+              <input type="radio" name="radio-10" className="radio checked:bg-yellow-500" checked />
+            </label>
+          </div>
+          <div className="form-control mt-0">
+            <label className="label cursor-pointer">
+              <span className="label-text">Reader</span> 
+              <input type="radio" name="radio-10" className="radio checked:bg-blue-500" checked />
+            </label>
+          </div>
           <button
             type="submit"
             className="text-lg font-semibold rounded-sm w-full py-3 bg-yellow-500"
