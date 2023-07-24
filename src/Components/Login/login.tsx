@@ -69,7 +69,10 @@ export default function Login() {
         <h2 className="text-3xl font-bold mb-2 md:text-center">Log In</h2>
         <p className="font-light text-center mb-6">
           Don't have an account?{" "}
-          <span onClick={() => navigate("/signup")} className="text-yellow-500">
+          <span
+            onClick={() => navigate("/signup")}
+            className="text-yellow-500 cursor-pointer"
+          >
             Sign Up
           </span>
         </p>

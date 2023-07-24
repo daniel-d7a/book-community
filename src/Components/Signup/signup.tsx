@@ -13,6 +13,7 @@ export default function SignUp() {
       password: "",
       confirmPassword: "",
       username: "",
+      type: "w",
     },
   });
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ export default function SignUp() {
     onSuccess: async (data) => {
       console.log("auth data from firebase", data);
       await getCurrentUser();
-      // navigate("/login");
+      navigate("/login");
     },
   });
   // add user to users collection
@@ -50,7 +51,7 @@ export default function SignUp() {
         <h2 className="text-3xl font-bold mb-2 md:text-center">Sign Up</h2>
         <p className="font-light text-center mb-6">
           Already have an account?{" "}
-          <span className="text-yellow-500" onClick={() => navigate("/login")}>
+          <span className="text-yellow-500 cursor-pointer" onClick={() => navigate("/login")}>
             Log In
           </span>
         </p>
@@ -82,14 +83,25 @@ export default function SignUp() {
           />
           <div className="form-control mb-0">
             <label className="label cursor-pointer">
-              <span className="label-text">Writer</span> 
-              <input type="radio" name="radio-10" className="radio checked:bg-yellow-500" checked />
+              <span className="label-text">Writer</span>
+              <input
+                type="radio"
+                className="radio checked:bg-yellow-500"
+                checked
+                value={"w"}
+                {...register("type")}
+              />
             </label>
           </div>
           <div className="form-control mt-0">
             <label className="label cursor-pointer">
-              <span className="label-text">Reader</span> 
-              <input type="radio" name="radio-10" className="radio checked:bg-blue-500" checked />
+              <span className="label-text">Reader</span>
+              <input
+                type="radio"
+                className="radio checked:bg-blue-500"
+                value={"r"}
+                {...register("type")}
+              />
             </label>
           </div>
           <button
