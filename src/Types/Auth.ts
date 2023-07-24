@@ -13,6 +13,7 @@ export const signUpDataSchema = z.object({
   password: z.string().min(1),
   confirmPassword: z.string().min(1),
   username: z.string().min(1),
+  profile_photo: z.string().optional(),
 });
 
 export type SignUpData = z.infer<typeof signUpDataSchema>;

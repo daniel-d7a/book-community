@@ -23,6 +23,7 @@ export async function getPostComments(postId: string): Promise<ApiComment[]> {
   const docRef = doc(db, "posts", postId);
   const docSnap = await getDoc(docRef);
   const commentIds = docSnap.data()?.comment_ids;
+  console.log(commentIds);
 
   return await Promise.all(
     commentIds.map(async (id: string) => {

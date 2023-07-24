@@ -8,6 +8,7 @@ import {
   addDoc,
   deleteDoc,
   setDoc,
+  updateDoc,
 } from "firebase/firestore";
 import { db } from "./database";
 import { SignUpData } from "../../../Types/Auth";
@@ -48,12 +49,20 @@ export async function createUserAfterSignUp(
   return await setDoc(docRef, user);
 }
 
-export async function uploadProfilePhoto(image: File) {
-  const storageRef = ref(storage, "profilePhotos-user1");
-  return await uploadBytes(storageRef, image);
+/**
+ * Uploads the user's profile photo.
+ *
+ * @param {string} userId - The ID of the user.
+ * @param {File} image - The image file to upload.
+ * @return {Promise<void>} A promise that resolves when the profile photo is uploaded.
+ */
+export async function uploadUserProfilePhoto(userId: string, image: File) {
+  const storageRef = ref(storage, `profile photos/${userId}`);
+  await uploadBytes(storageRef, image);
+  const imageUrl = await getDownloadURL(storageRef);
+  const docRef = doc(db, "users", userId);
+  return await updateDoc(docRef, {
+    profile_photo: imageUrl,
+  });
 }
 
-export async function getProfilePhoto() {
-  const storageRef = ref(storage, "profilePhotos-user1");
-  return await getDownloadURL(storageRef);
-}

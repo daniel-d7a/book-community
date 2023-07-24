@@ -1,24 +1,22 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
-import {
-  addReply,
-  getCommentReplies,
-} from "./Firebase/api/database/RepliesApi";
-import {
-  getProfilePhoto,
-  uploadProfilePhoto,
-} from "./Firebase/api/database/UserApi";
+import { getPostComments } from "./Firebase/api/database/CommentsApi";
+import { getUserById, uploadUserProfilePhoto } from "./Firebase/api/database/UserApi";
 
 export default function TestQueries() {
   const { data, status } = useQuery({
     queryKey: ["test query"],
-    queryFn: () => getProfilePhoto(),
+    queryFn: () => getUserById("Vm4MlX4a5havyADcmomHsSWQ2tg2"),
   });
 
   const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   // const { mutate, status, data } = useMutation({
-  //   mutationFn: () => uploadProfilePhoto(fileRef?.current?.files?.[0]),
+  //   mutationFn: () =>
+  //     uploadUserProfilePhoto(
+  //       "Vm4MlX4a5havyADcmomHsSWQ2tg2",
+  //       fileRef?.current?.files?.[0]!
+  //     ),
   // });
 
   if (status === "loading") return <></>;
@@ -29,15 +27,14 @@ export default function TestQueries() {
   return (
     <>
       <p>data</p>
-      <input
+      {/* <input
         onChange={() => {
           console.log("fileref ", fileRef?.current?.files?.[0]);
         }}
         ref={fileRef}
         type="file"
       />
-      <img src={data} />
-      {/* <button
+      <button
         className="btn"
         onClick={() => {
           mutate();
