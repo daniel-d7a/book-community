@@ -61,7 +61,7 @@ export default function Post({user, post} : PostProps) {
         
     }
     return(<>
-        <div className="rounded-md pb-4 bg-slate-950 max-w-2xl mx-auto w-fullshadow-xl mb-4">
+        <div className="rounded-md pb-4 bg-slate-950 max-w-lg mx-auto w-fullshadow-xl mb-4">
         <div className="flex gap-4 items-center pt-4 pl-4">
             <div className="relative">
                 <img src={user && user.profile_photo? user.profile_photo : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />

@@ -32,8 +32,8 @@ export default function Nav() {
                         <div className='flex gap-4'>
                             <img src={auth.currentUser?.profile_photo?auth.currentUser.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"} className=" w-12 h-12 rounded-full object-cover" />
                             <div className='flex flex-col'>
-                                <p className='font-bold'>Ehab Mohammed</p>
-                                <p className='text-sm text-gray-400'>Reader</p>
+                                <p className='font-bold'>{auth.currentUser?.username}</p>
+                                <p className='text-sm text-gray-400'>{auth.currentUser?.type === 'r'? "Reader" : "Writer"}</p>
                             </div>
                         </div>
                         <button className='w-full flex items-center justify-center py-2 text-sm bg-yellow-950 text-yellow-500'>View profile</button>
