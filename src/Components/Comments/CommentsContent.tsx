@@ -23,7 +23,7 @@ export default function CommentsContent({postID}) {
         <span className="sr-only">Loading...</span>
     </div>)
     }
-        return(<div className="px-2">    
+        return(<div className="px-4">    
             <div className="flex gap-2 mt-2">
                 <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
                 <img
