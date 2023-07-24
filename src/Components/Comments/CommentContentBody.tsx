@@ -48,7 +48,7 @@ export default function CommentContentBody({comment}) {
         </div>
         <div className={`chat-bubble ${comment.user_data.type === 'r'? "bg-blue-600":"bg-yellow-500"} text-white text-lg`}>{comment.text}</div>
     </div>
-    <div className="flex gap-4 items-center px-4 py-2">
+    <div className="flex gap-4 items-center px-4 py-2 ml-8">
         <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{handleclick(1)}}/> <span className="text-sm">{`${comment.votes}`}</span> <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
         <label htmlFor={``} className="flex gap-2 items-center"><BiCommentDetail/> <span className="text-sm">{`0`}</span></label>
     </div>
