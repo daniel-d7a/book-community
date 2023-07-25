@@ -62,7 +62,7 @@ export default function Home() {
         )}
         {status === "success" && <CreateFeed />}
         {status === "success" &&
-          data.map(
+          data.sort(function(a,b){return b.created_at - a.created_at}).map(
             (post) =>
               post.user_data && (
                 <Post
