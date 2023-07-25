@@ -5,6 +5,7 @@ export const postSchema = z.object({
   text: z.string().min(1),
 });
 
+
 export type Post = z.infer<typeof postSchema>;
 
 export const apiPostSchema = z.object({
