@@ -27,8 +27,8 @@ export default function CommentsContent({postID}) {
         },
       });
     const {mutate} = useMutation({
-        mutationFn:(text, id) => {
-            addComment(id, text)
+        mutationFn:(obj) => {
+            addComment(obj.id, obj.text)
         } ,
         onSuccess: async ()=>{
             const updatedComments = await QueryClient.fetchQuery(["commsForPost",postID])
@@ -40,7 +40,7 @@ export default function CommentsContent({postID}) {
         queryFn: ()=> getPostComments(postID),
     });
     function submit(data: z.infer<typeof scheme>){
-        mutate(data.commText, postID)
+        mutate({text:data.commText, id:postID})
         reset();
     }
     console.log(postID)
