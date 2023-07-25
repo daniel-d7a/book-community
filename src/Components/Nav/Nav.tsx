@@ -42,7 +42,7 @@ export default function Nav() {
     };
     if(status === "success"){
         return(<>
-            {inputFile.current?.value && <div className='w-full flex items-center justify-center  px-2 h-screen z-50 bg-black bg-opacity-50 absolute top-0 left-0'>
+            {inputFile.current?.value && <div className='w-full flex items-center justify-center  px-2 h-screen z-50 bg-black bg-opacity-50 fixed top-0 left-0'>
                     <div className='w-full max-w-lg flex flex-col gap-8 items-center opacity-100 py-8 bg-slate-900 rounded-md px-4'>
                         <p className='text-yellow-500 flex items-start gap-2'>Warning: you're about to Change your profile picture</p>
                         <img src={selectedImage} className=" w-40 h-40 rounded-full object-cover" />
