@@ -2,17 +2,22 @@ import { HiEmojiHappy, HiOutlineEmojiHappy } from "react-icons/hi";
 import { TfiLocationPin } from "react-icons/tfi";
 import { CgPoll } from "react-icons/cg";
 import Icon from "./atoms/icon";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createPost } from "../../Firebase/api/database/PostsApi";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BiCalendar, BiImage, BiVideo } from "react-icons/bi";
+import { getUserById } from "../../Firebase/api/database/UserApi";
 
 export default function CreateFeed() {
   const scheme = z.object({
     postText: string().min(1, { message: "post text can't be empty" }),
+  });
+  const { data, status } = useQuery({
+    queryKey: ["getUserWithId"],
+    queryFn: () =>getUserById(auth.currentUser?.uid),
   });
 
   const {
@@ -45,13 +50,13 @@ export default function CreateFeed() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto w-full bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
+    <div className="max-w-2xl mx-auto w-full max-w-lg bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
       <div className="flex gap-2">
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
           <img
             src={
-              auth.currentUser.profile_photo
-                ? auth.currentUser.profile_photo
+              data?.profile_photo
+                ? data?.profile_photo
                 : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
             }
             className="w-full object-cover "

@@ -1,17 +1,48 @@
-import { useQuery } from "@tanstack/react-query";
-import { getPostComments } from "../../Firebase/api/database/CommentsApi"
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { addComment, getPostComments } from "../../Firebase/api/database/CommentsApi"
 import CommentContentBody from "./CommentContentBody";
 import { useState } from "react";
+import { string, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { BiSend } from "react-icons/bi";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BsSendFill } from "react-icons/bs";
 
+
 export default function CommentsContent({postID}) {
-    const {comms, setComms} = useState(null);
+    // const {comms, setComms} = useState(null);
+    const scheme = z.object({
+        commText: string().min(1, { message: "post text can't be empty" }),
+      });
+      const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+      } = useForm({
+        resolver: zodResolver(scheme),
+        defaultValues: {
+          postText: "",
+        },
+      });
+    const {mutate} = useMutation({
+        mutationFn:(text, id) => {
+            addComment(id, text)
+        } ,
+        onSuccess: async ()=>{
+            const updatedComments = await QueryClient.fetchQuery(["commsForPost",postID])
+            QueryClient.setQueryData(["commsForPost",postID],updatedComments)
+        }
+    })
     const { data, status } = useQuery({
         queryKey: ["commsForPost",postID],
         queryFn: ()=> getPostComments(postID),
     });
+    function submit(data: z.infer<typeof scheme>){
+        mutate(data.commText, postID)
+        reset();
+    }
     console.log(postID)
     console.log("All comments:", data);
     if (status === "loading"){
@@ -31,7 +62,7 @@ export default function CommentsContent({postID}) {
                     className="w-full object-cover "
                 />
                 </div>
-                <form className="w-full bg-slate-900 h-10 rounded-md flex">
+                <form onSubmit={(e)=>submit(e.target.value)} className="w-full bg-slate-900 h-10 rounded-md flex">
                         <textarea
                         placeholder="Add a comment"
                         className="focus:outline-none bg-transparent  max-h-64 p-2 pl-3 rounded-md h-10 resize-none transition-all w-full"
