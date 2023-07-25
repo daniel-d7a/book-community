@@ -172,7 +172,7 @@ export default function Nav() {
                     {changeProfile && (
                       <button
                         onClick={onButtonClick}
-                        className="z-40 absolute top-12 left-8 rounded-md bg-slate-950 p-2 text-sm md:text-base"
+                        className="z-40 absolute top-12 left-8 rounded-md bg-slate-950 p-2 text-xs md:text-base"
                       >
                         Change profile picture
                       </button>
