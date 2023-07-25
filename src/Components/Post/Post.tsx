@@ -1,12 +1,14 @@
 import {TfiLocationPin} from "react-icons/tfi"
 import Comments from "../Comments/Comments"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {BiUpvote,BiDownvote, BiCommentDetail,BiShareAlt,BiStar,BiDotsHorizontalRounded,BiBookReader,BiEditAlt} from "react-icons/bi"
 import { SignUpData } from "../../Types/Auth"
 import { ApiPost } from "../../Types/Posts"
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { getPostComments } from "../../Firebase/api/database/CommentsApi"
 import CommentsContent from "../Comments/CommentsContent"
+import { votePost } from "../../Firebase/api/database/PostsApi"
+import { auth } from "../../Firebase/api/auth/auth"
 
 type PostProps = {
   user: SignUpData,
@@ -15,9 +17,24 @@ type PostProps = {
 
 export default function Post({user, post} : PostProps) {
     const[displayComms, setDisplayComms] = useState(false)
+    const {mutate} = useMutation({
+        mutationFn: ({id,vote}) => votePost(id,vote),
+
+    })
     const[votes, setVotes] = useState(post.votes)
     const[upVoted,setUpvoted] = useState(false)
     const[downVoted,setDownvoted] = useState(false)
+    useEffect(()=>{
+        const currentlyVoted = post.voter_ids.find(x => x.id === auth.currentUser.uid)
+        console.log("currently voted is: ",currentlyVoted)
+        if(currentlyVoted){
+            if(currentlyVoted.vote === "up"){
+                setUpvoted(true)
+            }else{
+                setDownvoted(true)
+            }
+        }
+    },[])
     function getDate(timestamp:any){
         const milliseconds = timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000)
         const date = new Date(milliseconds); // Create a new Date object from the milliseconds
@@ -30,12 +47,17 @@ export default function Post({user, post} : PostProps) {
         return formattedDate
     }
     function handleclick(amount:number){
+        if(amount === 1){
+            mutate({id:post.id, vote:"up"})
+        }else{
+            mutate({id:post.id, vote:"down"})
+        }
         if(!upVoted && !downVoted){
             if (amount===1){
                 setUpvoted(true)
+                
             } else if(amount === -1){
                 setDownvoted(true)
-                
             }
             post.votes += amount
             setVotes(post.votes)
@@ -95,10 +117,10 @@ export default function Post({user, post} : PostProps) {
             <img src={post.image} className="" />
         </figure>}
         <div className="flex gap-4 items-center px-4 py-2">
-            <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-teal-500":"text-white"}`} onClick={()=>{handleclick(1)}}/> <span className="text-sm">{`Votes (${votes})`}</span> <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
+            <p className="flex gap-2 items-center"><BiUpvote className={`${upVoted? "text-blue-600":"text-white"}`} onClick={()=>{handleclick(1)}}/> <span className="text-sm">{`Votes (${votes})`}</span> <BiDownvote className={`${downVoted? "text-yellow-500":"text-white"}`} onClick={()=>{handleclick(-1)}}/></p>
             <label htmlFor={`comments_${post.id}`} className="flex gap-2 items-center" onClick={()=> {
                 console.log(post.id)
-                setDisplayComms(true)}} ><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
+                setDisplayComms(!displayComms)}} ><BiCommentDetail/> <span className="text-sm">{`Comments (${post.comment_ids.length})`}</span></label>
             <BiShareAlt/>
             <BiStar className="ml-auto"/>
         </div>
