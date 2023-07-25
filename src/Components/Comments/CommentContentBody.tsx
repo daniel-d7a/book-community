@@ -52,7 +52,7 @@ export default function CommentContentBody({
         <div
           className={`chat-bubble ${
             comment.user_data.type === "r" ? "bg-blue-600" : "bg-yellow-500"
-          } text-white text-lg`}
+          } text-white text-sm`}
         >
           {comment.text}
         </div>
