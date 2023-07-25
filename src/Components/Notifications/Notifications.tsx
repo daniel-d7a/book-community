@@ -1,5 +1,6 @@
 import SingleNotification from "./SingleNotification";
 
+// fixed
 export default function Notifications() {
   return (
     <div className="bg-base-200">
