@@ -71,7 +71,7 @@ export default function Nav() {
               />
               <div className="flex gap-4">
                 <button
-                  className="p-2 px-4 rounded-md bg-yellow-500"
+                  className="p-2 px-4 rounded-md bg-yellow-500 text-sm md:text-base"
                   onClick={(e) => {
                     console.log("clicked");
                     mutate();
@@ -80,7 +80,7 @@ export default function Nav() {
                 >
                   {isLoading?<div
             role="status"
-            className="w-full flex flex-col items-center"
+            className="w-full flex flex-col items-center text-sm md:text-base"
           >
             <svg
               aria-hidden="true"
@@ -102,13 +102,13 @@ export default function Nav() {
                   </div>:"Save"}
                 </button>
                 <button
-                  className="p-2 px-4 rounded-md bg-yellow-950 text-yellow-500"
+                  className="p-2 px-4 rounded-md bg-yellow-950 text-yellow-500 text-sm md:text-base"
                   onClick={onButtonClick}
                 >
                   Select other photo
                 </button>
                 <button
-                  className="p-2 px-4 rounded-md text-red-500 bg-red-950 bg-opacity-50"
+                  className="p-2 px-4 rounded-md text-red-500 bg-red-950 bg-opacity-50 text-sm md:text-base"
                   onClick={() => {
                     inputFile.current.value = null;
                     setSelectedImage(null);
@@ -172,7 +172,7 @@ export default function Nav() {
                     {changeProfile && (
                       <button
                         onClick={onButtonClick}
-                        className="z-40 absolute top-12 left-8 rounded-md bg-slate-950 p-2"
+                        className="z-40 absolute top-12 left-8 rounded-md bg-slate-950 p-2 text-sm md:text-base"
                       >
                         Change profile picture
                       </button>
