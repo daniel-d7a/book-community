@@ -25,7 +25,7 @@ export async function getPostComments(postId: string): Promise<ApiComment[]> {
   const commentIds = docSnap.data()?.comment_ids;
   console.log(commentIds);
 
-  return await Promise.all(
+  const comments = await Promise.all(
     commentIds.map(async (id: string) => {
       const commentData = (await getDoc(doc(db, "comments", id))).data();
       console.log("comment data", commentData);
@@ -40,6 +40,8 @@ export async function getPostComments(postId: string): Promise<ApiComment[]> {
       };
     })
   );
+
+  return comments.sort((a, b) => b.created_at - a.created_at);
 }
 
 /**

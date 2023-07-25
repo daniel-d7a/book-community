@@ -12,4 +12,6 @@ exports.signUpDataSchema = zod_1.z.object({
     password: zod_1.z.string().min(1),
     confirmPassword: zod_1.z.string().min(1),
     username: zod_1.z.string().min(1),
+    type: zod_1.z.string().min(1).max(1),
+    profile_photo: zod_1.z.string().optional(),
 });

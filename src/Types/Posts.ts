@@ -5,14 +5,18 @@ export const postSchema = z.object({
   text: z.string().min(1),
 });
 
-
 export type Post = z.infer<typeof postSchema>;
 
 export const apiPostSchema = z.object({
   id: z.string(),
   comment_ids: z.array(z.string()),
   votes: z.number(),
-  voter_ids: z.array(z.string()),
+  voter_ids: z.array(
+    z.object({
+      id: z.string(),
+      vote: z.enum(["up", "down"]),
+    })
+  ),
   text: z.string().min(1),
   user_id: z.string(),
   created_at: z.any(),
