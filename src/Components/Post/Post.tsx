@@ -154,7 +154,7 @@ export default function Post({ user, post }: PostProps) {
 
                   post.community}
             </a>
-            <div className="flex gap-2 text-xs text-zinc-400">
+            <div className="flex gap-2 text-base text-zinc-400">
               <p>{getDate(post.created_at)}</p>
               {/* @ts-ignore */}
               {post.location && (
