@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { BiSend } from "react-icons/bi";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BsSendFill } from "react-icons/bs";
+import { getUserById } from "../../Firebase/api/database/UserApi";
 
 export default function CommentsContent({ postID }: { postID: string }) {
   // const {comms, setComms} = useState(null);
@@ -42,6 +43,10 @@ export default function CommentsContent({ postID }: { postID: string }) {
       ]);
       queryClient.setQueryData(["commsForPost", postID], updatedComments);
     },
+  });
+  const { data:userData, isSuccess } = useQuery({
+    queryKey: ["getUserWithId"],
+    queryFn: () => getUserById(auth?.currentUser?.uid!),
   });
   const { data, status } = useQuery({
     queryKey: ["commsForPost", postID],
@@ -87,9 +92,9 @@ export default function CommentsContent({ postID }: { postID: string }) {
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
           <img
             src={
-              "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
+              isSuccess?userData?.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
             }
-            className="w-full object-cover "
+            className="w-12 h-12 rounded-full object-cover"
           />
         </div>
         <form

@@ -1,5 +1,6 @@
 import { TfiLocationPin } from "react-icons/tfi";
 import { useEffect, useState } from "react";
+import getDate from "../../Helper/DateFormatter";
 import {
   BiUpvote,
   BiDownvote,
@@ -37,7 +38,6 @@ export default function Post({ user, post }: PostProps) {
     const currentlyVoted = post.voter_ids.find(
       (x) => x.id === auth?.currentUser?.uid
     );
-    console.log("currently voted is: ", currentlyVoted);
     if (currentlyVoted) {
       if (currentlyVoted.vote === "up") {
         setUpvoted(true);
@@ -46,18 +46,42 @@ export default function Post({ user, post }: PostProps) {
       }
     }
   }, []);
-  function getDate(timestamp: any) {
-    const milliseconds =
-      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000);
-    const date = new Date(milliseconds); // Create a new Date object from the milliseconds
-
-    const day = date.getDate().toString().padStart(2, "0"); // Get the day and pad it with a leading zero if necessary
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get the month (Note: January is 0) and pad it with a leading zero if necessary
-    const year = date.getFullYear().toString(); // Get the full year
-
-    const formattedDate = `${day}/${month}/${year}`; // Combine the day, month, and year to get the formatted date
-    return formattedDate;
-  }
+  //   const timeAgo = formatTimeAgo(timestamp.seconds * 1000);
+  //   return timeAgo
+  // }
+  // const formatTimeAgo = (timestamp: any) => {
+  //   const now = Date.now();
+  //   const diffInMilliseconds = (now - timestamp);
+  //   const formatter = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+  
+  //   if (diffInMilliseconds < 60 * 1000) {
+  //     const diffInSeconds = Math.round(diffInMilliseconds / 1000);
+  //     return formatter.format(-diffInSeconds, 'second');
+  //   }
+  
+  //   if (diffInMilliseconds < 60 * 60 * 1000) {
+  //     const diffInMinutes = Math.round(diffInMilliseconds / (60 * 1000));
+  //     return formatter.format(-diffInMinutes, 'minute');
+  //   }
+  
+  //   if (diffInMilliseconds < 24 * 60 * 60 * 1000) {
+  //     const diffInHours = Math.round(diffInMilliseconds / (60 * 60 * 1000));
+  //     return formatter.format(-diffInHours, 'hour');
+  //   }
+  
+  //   if (diffInMilliseconds < 30 * 24 * 60 * 60 * 1000) {
+  //     const diffInDays = Math.round(diffInMilliseconds / (24 * 60 * 60 * 1000));
+  //     return formatter.format(-diffInDays, 'day');
+  //   }
+  //   if (diffInMilliseconds < 12 * 30 * 24 * 60 * 60 * 1000) {
+  //     const diffInDays = Math.round(diffInMilliseconds / (30 * 24 * 60 * 60 * 1000));
+  //     return formatter.format(-diffInDays, 'month');
+  //   }
+  
+  //   // Add more conditions for weeks, months, etc. if needed
+  
+  //   return 'Long time ago';
+  // };
   function handleclick(amount: number) {
     if (amount === 1) {
       mutate({ id: post.id, vote: "up" });
