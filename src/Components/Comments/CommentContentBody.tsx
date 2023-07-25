@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { BiCommentDetail, BiDownvote, BiUpvote } from "react-icons/bi";
 import { ApiComment } from "../../Types/Comments";
+import getDate from "../../Helper/DateFormatter";
 
 export default function CommentContentBody({
   comment,
@@ -27,18 +28,6 @@ export default function CommentContentBody({
       setUpvoted(true);
       setDownvoted(false);
     }
-  }
-  function getDate(timestamp: any) {
-    const milliseconds =
-      timestamp.seconds * 1000 + Math.floor(timestamp.nanoseconds / 1000000);
-    const date = new Date(milliseconds); // Create a new Date object from the milliseconds
-
-    const day = date.getDate().toString().padStart(2, "0"); // Get the day and pad it with a leading zero if necessary
-    const month = (date.getMonth() + 1).toString().padStart(2, "0"); // Get the month (Note: January is 0) and pad it with a leading zero if necessary
-    const year = date.getFullYear().toString(); // Get the full year
-
-    const formattedDate = `${day}/${month}/${year}`; // Combine the day, month, and year to get the formatted date
-    return formattedDate;
   }
   return (
     <div className="">

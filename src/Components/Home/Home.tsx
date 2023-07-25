@@ -22,10 +22,6 @@ export default function Home() {
     queryFn: getAllPosts,
   });
 
-  if (status === "success") {
-    console.log("all posts data", data);
-  }
-
   if (
     !window.localStorage.getItem("currentUser") &&
     !window.sessionStorage.getItem("currentUser")

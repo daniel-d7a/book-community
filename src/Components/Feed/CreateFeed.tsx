@@ -50,7 +50,7 @@ export default function CreateFeed() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto w-full max-w-lg bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
+    <div className="mx-auto w-full max-w-lg bg-slate-950 h-fit mt-2 mb-6 rounded-md px-3 py-3">
       <div className="flex gap-2">
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
           <img
@@ -59,7 +59,7 @@ export default function CreateFeed() {
                 ? data?.profile_photo
                 : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
             }
-            className="w-full object-cover "
+            className="w-12 h-12 rounded-full object-cover"
           />
         </div>
         <div className="w-full mb-4">
