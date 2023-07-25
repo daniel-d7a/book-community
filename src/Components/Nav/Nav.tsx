@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { ChangeEvent, MouseEventHandler, useRef, useState } from "react";
 import {
   BiHomeAlt,
   BiSearch,
@@ -22,24 +22,24 @@ import {
 } from "../../Firebase/api/database/UserApi";
 import { AiFillWarning } from "react-icons/ai";
 export default function Nav() {
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [selectedImage, setSelectedImage] = useState("");
 
-  const inputFile = useRef(null);
+  const inputFile = useRef() as React.MutableRefObject<HTMLInputElement>;
   const navigate = useNavigate();
   const [changeProfile, setChangeProfile] = useState(false);
   const [tools, setTools] = useState(false);
-  const onFileSelected = (event) => {
-    const file = event.target.files[0];
+  const onFileSelected = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event?.target?.files?.[0]!;
     const imageUrl = URL.createObjectURL(file);
     setSelectedImage(imageUrl);
   };
   const onButtonClick = () => {
     inputFile.current?.click();
   };
-  const { mutate,isLoading } = useMutation({
+  const { mutate, isLoading } = useMutation({
     mutationFn: () =>
       uploadUserProfilePhoto(
-        auth.currentUser.uid,
+        auth?.currentUser?.uid!,
         inputFile?.current?.files?.[0]!
       ),
     onSuccess: async () => {
@@ -49,7 +49,7 @@ export default function Nav() {
   });
   const { data, status } = useQuery({
     queryKey: ["getUserWithId"],
-    queryFn: () => getUserById(auth.currentUser?.uid),
+    queryFn: () => getUserById(auth?.currentUser?.uid!),
   });
   const logOut = () => {
     window.localStorage.removeItem("currentUser");
@@ -71,16 +71,16 @@ export default function Nav() {
               />
               <div className="flex gap-4">
                 <button
-                  className="p-2 px-4 rounded-md bg-yellow-500 text-sm md:text-base"
+                  className="p-2 px-4 rounded-md bg-yellow-500"
                   onClick={(e) => {
                     console.log("clicked");
                     mutate();
-                    e.target.disabled = true;
+                    (e.target as HTMLButtonElement).disabled = true;
                   }}
                 >
                   {isLoading?<div
             role="status"
-            className="w-full flex flex-col items-center text-sm md:text-base"
+            className="w-full flex flex-col items-center"
           >
             <svg
               aria-hidden="true"
@@ -110,8 +110,8 @@ export default function Nav() {
                 <button
                   className="p-2 px-4 rounded-md text-red-500 bg-red-950 bg-opacity-50 text-sm md:text-base"
                   onClick={() => {
-                    inputFile.current.value = null;
-                    setSelectedImage(null);
+                    inputFile.current.files = null;
+                    setSelectedImage("");
                   }}
                 >
                   Cancel
@@ -147,8 +147,8 @@ export default function Nav() {
               >
                 <img
                   src={
-                    data.profile_photo
-                      ? data.profile_photo
+                    data?.profile_photo
+                      ? data?.profile_photo
                       : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                   }
                 />
@@ -163,8 +163,8 @@ export default function Nav() {
                     <img
                       onClick={() => setChangeProfile(!changeProfile)}
                       src={
-                        data.profile_photo
-                          ? data.profile_photo
+                        data?.profile_photo
+                          ? data?.profile_photo
                           : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                       }
                       className=" w-12 h-12 rounded-full object-cover cursor-pointer"
@@ -186,9 +186,9 @@ export default function Nav() {
                       style={{ display: "none" }}
                     />
                     <div className="flex flex-col">
-                      <p className="font-bold">{data.username}</p>
+                      <p className="font-bold">{data?.username}</p>
                       <p className="text-sm text-gray-400">
-                        {data.type === "r" ? "Reader" : "Writer"}
+                        {data?.type === "r" ? "Reader" : "Writer"}
                       </p>
                     </div>
                   </div>

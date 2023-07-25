@@ -23,7 +23,7 @@ const userCollectionRef = collection(db, "users");
  * @param {string} id - The ID of the user to retrieve.
  * @return {Promise<SignUpData | null>} A promise that resolves with the user data if found, or null if not found.
  */
-export async function getUserById(id: string): Promise<SignUpData | null> {
+export async function getUserById(id: string = ""): Promise<SignUpData | null> {
   const userDocRef = doc(db, "users", id);
   const userDoc = await getDoc(userDocRef);
   if (userDoc.exists()) {

@@ -1,5 +1,4 @@
-import SingleNotification from "./SingleNotification";
-
+// fixed
 export default function Notifications() {
   return (
     <div className="bg-base-200">
@@ -7,7 +6,7 @@ export default function Notifications() {
         Notifications
       </h2>
       <div className="space-y-5 md:mx-60 bg-base-300 py-6">
-        {[
+        {/* {[
           {
             image: "https://source.unsplash.com/mEZ3PoFGs_k",
             person: "sara doe",
@@ -93,16 +92,16 @@ export default function Notifications() {
             time: [-4, "day"],
           },
         ].map(({ image, person, action, text, time }, i) => (
-          <SingleNotification
-            key={`asdfasdf${i}`}
-            image={image}
-            person={person}
-            action={action}
-            text={text}
-            //@ts-ignore
-            time={time}
-          />
-        ))}
+          // <SingleNotification
+          //   key={`asdfasdf${i}`}
+          //   image={image}
+          //   person={person}
+          //   action={action}
+          //   text={text}
+          //   //@ts-ignore
+          //   time={time}
+          // />
+        ))} */}
       </div>
     </div>
   );
