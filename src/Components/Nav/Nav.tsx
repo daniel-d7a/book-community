@@ -73,7 +73,6 @@ export default function Nav() {
                 <button
                   className="p-2 px-4 rounded-md bg-yellow-500 text-sm md:text-base"
                   onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                    console.log("clicked");
                     mutate();
                     (e.target as HTMLButtonElement).disabled = true;
                   }}
