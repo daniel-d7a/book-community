@@ -10,6 +10,8 @@ export default function CommentContentBody({
 }) {
   const [upVoted, setUpvoted] = useState(false);
   const [downVoted, setDownvoted] = useState(false);
+  const [showMore, setShowMore] = useState(false);
+
   function handleclick(amount: number) {
     if (!upVoted && !downVoted) {
       if (amount === 1) {
@@ -50,11 +52,15 @@ export default function CommentContentBody({
           </time>
         </div>
         <div
-          className={`chat-bubble ${
+          className={`px-4 py-2 rounded-tl-xl rounded-tr-xl rounded-br-xl ${
             comment.user_data.type === "r" ? "bg-blue-600" : "bg-yellow-500"
           } text-white text-sm`}
         >
-          {comment.text}
+          {comment.text.length < 200? comment.text : 
+          <>
+            {showMore? comment.text :comment.text.slice(0,200)}
+            <span className="ml-2 cursor-pointer text-sm underline" onClick={()=>setShowMore(!showMore)}>{showMore?"show less":"show more"}</span>
+          </>}
         </div>
       </div>
       <div className="flex gap-4 items-center px-4 py-2 ml-8">
