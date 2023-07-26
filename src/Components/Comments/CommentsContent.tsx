@@ -60,8 +60,6 @@ export default function CommentsContent({ postID }: { postID: string }) {
     reset();
   }
 
-  console.log(postID);
-  console.log("All comments:", data);
 
   if (status === "loading") {
     return (
