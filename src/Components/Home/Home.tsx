@@ -1,8 +1,5 @@
 import { Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { getAllPosts } from "../../Firebase/api/database/PostsApi";
-import { useQuery } from "@tanstack/react-query";
-import Nav from "../Nav/Nav";
 import { Route, Routes } from "react-router-dom";
 import Feed from "../Feed/Feed";
 import Profile from "../profile/Profile";
