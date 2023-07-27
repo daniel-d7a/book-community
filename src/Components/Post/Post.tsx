@@ -245,7 +245,6 @@ export default function Post({ user, post }: PostProps) {
             htmlFor={`comments_${post.id}`}
             className="flex gap-2 items-center"
             onClick={() => {
-              console.log(post.id);
               setDisplayComms(!displayComms);
             }}
           >
