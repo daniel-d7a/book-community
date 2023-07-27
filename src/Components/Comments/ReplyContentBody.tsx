@@ -53,7 +53,7 @@ export default function ReplyContentBody({
           </time>
         </div>
         <div
-          className={`px-4 py-2 rounded-tl-xl rounded-bl-xl rounded-br-xl ${
+          className={`px-4 py-2 rounded-tl-xl rounded-bl-xl rounded-tr-xl ${
             reply.user_data.type === "r" ? "bg-blue-600" : "bg-yellow-500"
           } text-white text-sm`}
         >
