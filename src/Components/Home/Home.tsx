@@ -14,10 +14,6 @@ export default function Home() {
     window.sessionStorage.removeItem("currentUser");
     navigate("/login");
   };
-  const { data, status } = useQuery({
-    queryKey: ["posts"],
-    queryFn: getAllPosts,
-  });
 
   if (
     !window.localStorage.getItem("currentUser") &&
