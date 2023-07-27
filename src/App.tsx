@@ -13,7 +13,7 @@ function App() {
   return (
     <>
       <div className="mb-0 overflow-hidden">
-        {!restricted_paths.includes(window.location.pathname) && <Nav/>}
+        
         <Routes>
           <Route path="*" element={<Home/>} />
           {/* <Route path="/notifications" element={<Notifications />} /> */}

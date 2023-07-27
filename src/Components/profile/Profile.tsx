@@ -8,6 +8,7 @@ import { getUserPosts } from "../../Firebase/api/database/PostsApi";
 import Post from "../Post/Post";
 import { SignUpData } from "../../Types/Auth";
 import { ApiPost } from "../../Types/Posts";
+import Nav from "../Nav/Nav";
 
 export default function Profile() {
   window.scrollTo(0, 0)
@@ -23,6 +24,7 @@ export default function Profile() {
   });
   
   return(<div className="bg-slate-900 min-h-screen mb-0 overflow-hidden">
+    <Nav/>
     <div className="px-4 pt-20 flex flex-col">
       {status === "loading" && <>
         <div
