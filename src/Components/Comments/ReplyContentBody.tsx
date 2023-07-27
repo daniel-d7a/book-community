@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ApiReply } from "../../Types/Replies";
 import getDate from "../../Helper/DateFormatter";
 import { BiDownvote, BiUpvote } from "react-icons/bi";
+import { useNavigate } from "react-router-dom";
 
 export default function ReplyContentBody({
     reply,
@@ -11,7 +12,7 @@ export default function ReplyContentBody({
     const [upVoted, setUpvoted] = useState(false);
   const [downVoted, setDownvoted] = useState(false);
   const [showMore, setShowMore] = useState(false);
-
+  const navigate = useNavigate()
   function handleclick(amount: number) {
     if (!upVoted && !downVoted) {
       if (amount === 1) {
@@ -38,6 +39,8 @@ export default function ReplyContentBody({
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
             <img
+            className="cursor-pointer"
+              onClick={()=>navigate(`/profile/${reply.user_id}`)}
               src={
                 reply.user_data?.profile_photo
                   ? reply.user_data?.profile_photo
@@ -47,7 +50,7 @@ export default function ReplyContentBody({
           </div>
         </div>
         <div className="chat-header mb-2 text-xs">
-          {reply.user_data.username}
+          <p className="cursor-pointer" onClick={()=>navigate(`/profile/${reply.user_id}`)}>{reply.user_data.username}</p>
           <time className="text-xs opacity-50 ml-2">
             {getDate(reply.created_at)}
           </time>

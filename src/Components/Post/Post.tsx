@@ -13,8 +13,8 @@ import {
 } from "react-icons/bi";
 import { SignUpData } from "../../Types/Auth";
 import { ApiPost } from "../../Types/Posts";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getPostComments } from "../../Firebase/api/database/CommentsApi";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
 import CommentsContent from "../Comments/CommentsContent";
 import { deletePostById, votePost } from "../../Firebase/api/database/PostsApi";
 import { auth } from "../../Firebase/api/auth/auth";
@@ -27,6 +27,7 @@ type PostProps = {
 export type Vote = { id: string; vote: "up" | "down" };
 
 export default function Post({ user, post }: PostProps) {
+  const navigate = useNavigate()
   const queryClient = useQueryClient();
   const [showMore, setShowMore] = useState(false)
   const [displayComms, setDisplayComms] = useState(false);
@@ -142,16 +143,17 @@ export default function Post({ user, post }: PostProps) {
               </div>
             </div>
           </div>)}
-      <div className="rounded-md pb-4 bg-slate-950 max-w-lg mx-auto w-fullshadow-xl mb-4">
+      <div className="rounded-md pb-4 bg-slate-950 w-full max-w-lg mx-auto w-fullshadow-xl mb-4">
         <div className="flex gap-4 items-center pt-4 pl-4">
           <div className="relative">
             <img
+              onClick={()=>navigate(`/profile/${post.user_id}`)}
               src={
                 user && user.profile_photo
                   ? user.profile_photo
                   : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
               }
-              className=" w-12 h-12 rounded-full object-cover"
+              className=" w-12 h-12 rounded-full object-cover cursor-pointer"
             />
             <div
               className={`absolute bottom-0 right-0 w-5 h-5 rounded-full ${
@@ -162,7 +164,7 @@ export default function Post({ user, post }: PostProps) {
             </div>
           </div>
           <div className="text-sm">
-            <a href="#" className="text-lg font-bold">
+            <a onClick={()=>navigate(`/profile/${post.user_id}`)} href="#" className="text-lg font-bold cursor-pointer">
               {user.username || "user"}
             </a>
             {/* @ts-ignore */}

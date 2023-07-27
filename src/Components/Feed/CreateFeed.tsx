@@ -10,6 +10,7 @@ import { string, z } from "zod";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BiCalendar, BiImage, BiVideo } from "react-icons/bi";
 import { getUserById } from "../../Firebase/api/database/UserApi";
+import { useNavigate } from "react-router-dom";
 
 export default function CreateFeed() {
   const scheme = z.object({
@@ -33,7 +34,7 @@ export default function CreateFeed() {
   });
 
   const queryClient = useQueryClient();
-
+  const navigate = useNavigate()
   const { mutate, isLoading } = useMutation({
     mutationFn: createPost,
     onSuccess: async () => {
@@ -52,12 +53,13 @@ export default function CreateFeed() {
       <div className="flex gap-2">
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
           <img
+            onClick={()=>navigate(`/profile/${auth.currentUser?.uid}`)}
             src={
               data?.profile_photo
                 ? data?.profile_photo
                 : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
             }
-            className="w-12 h-12 rounded-full object-cover"
+            className="w-12 h-12 rounded-full object-cover cursor-pointer"
           />
         </div>
         <div className="w-full mb-4">
