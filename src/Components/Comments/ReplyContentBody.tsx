@@ -72,7 +72,7 @@ export default function ReplyContentBody({
               handleclick(1);
             }}
           />{" "}
-          <span className="text-sm">{`${reply.votes? reply.votes:"0"}`}</span>{" "}
+          <span className="text-sm">{`0`}</span>{" "}
           <BiDownvote
             className={`${downVoted ? "text-yellow-500" : "text-white"}`}
             onClick={() => {
