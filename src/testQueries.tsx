@@ -1,37 +1,39 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import {
-  getPostComments,
-  voteComment,
-} from "./Firebase/api/database/CommentsApi";
-import {
-  getUserById,
-  uploadUserProfilePhoto,
-} from "./Firebase/api/database/UserApi";
-import { createPost } from "./Firebase/api/database/PostsApi";
-import { voteReply } from "./Firebase/api/database/RepliesApi";
+import { getAllPostsPaginated } from "./Firebase/api/database/PostsApi";
 
 export default function TestQueries() {
-  // const { data, status } = useQuery({
-  //   queryKey: ["test query"],
-  //   queryFn: () => getUserById("Vm4MlX4a5havyADcmomHsSWQ2tg2"),
-  // });
+  const [page, setPage] = useState(1);
 
-  const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
-
-  const { mutate, status, data } = useMutation({
-    mutationFn: ({ id, vote }: { id: string; vote: "up" | "down" }) =>
-      voteReply(id, vote),
+  const { data, status } = useQuery({
+    queryKey: ["test query", page],
+    queryFn: getAllPostsPaginated,
   });
+
+  // const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+
+  // const { mutate, status, data } = useMutation({
+  //   mutationFn: ({ id, vote }: { id: string; vote: "up" | "down" }) =>
+  //     voteReply(id, vote),
+  // });
 
   if (status === "loading") return <>loading...</>;
   if (status === "success") {
-    console.log(data);
+    console.log("data", data);
   }
 
   return (
     <>
       <p>data</p>
+      <button
+        className="btn"
+        onClick={() => {
+          setPage((page) => page + 1);
+          console.log(page);
+        }}
+      >
+        add page
+      </button>
       {/* <input
         onChange={() => {
           console.log("fileref ", fileRef?.current?.files);
@@ -42,7 +44,7 @@ export default function TestQueries() {
         multiple
       /> */}
 
-      <button
+      {/* <button
         className="btn"
         onClick={() => {
           mutate({
@@ -52,7 +54,7 @@ export default function TestQueries() {
         }}
       >
         upvote
-      </button>
+      </button> */}
     </>
   );
 }

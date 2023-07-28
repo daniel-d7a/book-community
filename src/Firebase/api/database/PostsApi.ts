@@ -13,6 +13,9 @@ import {
   updateDoc,
   increment,
   arrayRemove,
+  limit,
+  startAfter,
+  QuerySnapshot,
 } from "firebase/firestore";
 
 import { db } from "./database";
@@ -50,6 +53,45 @@ export async function getAllPosts(): Promise<ApiPost[]> {
     })
   );
 }
+
+function paginate() {
+  let q;
+  let querySnapshot!: QuerySnapshot;
+
+  return async function () {
+    console.log("last snap", querySnapshot);
+
+    if (querySnapshot) {
+      q = query(
+        postsCollectionRef,
+        orderBy("created_at", "desc"),
+        limit(3),
+        startAfter((querySnapshot as QuerySnapshot).docs.at(-1))
+      );
+    } else {
+      q = query(postsCollectionRef, orderBy("created_at", "desc"), limit(3));
+    }
+    querySnapshot = await getDocs(q);
+    // console.log("query docs", querySnapshot.docs);
+    const postsData: ApiPost[] = querySnapshot.docs.map((doc) => {
+      return {
+        id: doc.id,
+        ...doc.data(),
+      } as ApiPost;
+    });
+    return await Promise.all(
+      postsData.map(async (singlePost) => {
+        const userData = (
+          await getDoc(doc(db, "users", singlePost.user_id))
+        ).data();
+        // console.log("user data", userData);
+        return { ...singlePost, user_data: userData } as ApiPost;
+      })
+    );
+  };
+}
+
+export const getAllPostsPaginated = paginate();
 
 /**
  * Retrieves the posts of a user from the API.
