@@ -1,6 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { getPostComments } from "./Firebase/api/database/CommentsApi";
+import {
+  getPostComments,
+  voteComment,
+} from "./Firebase/api/database/CommentsApi";
 import {
   getUserById,
   uploadUserProfilePhoto,
@@ -16,8 +19,8 @@ export default function TestQueries() {
   const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   const { mutate, status, data } = useMutation({
-    mutationFn: ({ text, images }: { text: string; images: File[] }) =>
-      createPost({ text, images }),
+    mutationFn: ({ id, vote }: { id: string; vote: "up" | "down" }) =>
+      voteComment(id, vote),
   });
 
   if (status === "loading") return <>loading...</>;
@@ -28,7 +31,7 @@ export default function TestQueries() {
   return (
     <>
       <p>data</p>
-      <input
+      {/* <input
         onChange={() => {
           console.log("fileref ", fileRef?.current?.files);
         }}
@@ -36,20 +39,18 @@ export default function TestQueries() {
         type="file"
         accept="image/*"
         multiple
-      />
+      /> */}
 
       <button
         className="btn"
         onClick={() => {
           mutate({
-            text: "test post with images",
-            images:
-              (fileRef?.current?.files && Array.from(fileRef.current.files)) ||
-              [],
+            id: "2zTesemTJKGDaAzjFhdu",
+            vote: "doSDFwn",
           });
         }}
       >
-        upload
+        upvote
       </button>
     </>
   );
