@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { auth } from "../../Firebase/api/auth/auth";
 import { useQuery } from "@tanstack/react-query";
 import { getUserById } from "../../Firebase/api/database/UserApi";
-import { BiDotsHorizontalRounded, BiPen, BiPencil } from "react-icons/bi";
+import { BiBookReader, BiDotsHorizontalRounded, BiEditAlt, BiPen, BiPencil } from "react-icons/bi";
 import CreateFeed from "../Feed/CreateFeed";
 import { getUserPosts } from "../../Firebase/api/database/PostsApi";
 import Post from "../Post/Post";
@@ -55,7 +55,11 @@ export default function Profile() {
       </>}
       {status === "success" && <>
         <div className="w-full bg-slate-950 mb-4 max-w-lg md:mx-auto pt-20 pb-4 relative rounded-md overflow-hidden">
-          <div className={`w-full h-36 absolute top-0 z-0 left-0 ${data?.type === 'r'? "bg-blue-600":"bg-yellow-500"}`}></div>
+          <div className={`w-full h-36 absolute top-0 z-0 left-0 ${data?.type === 'r'? "bg-blue-600":"bg-yellow-500"}`}>
+            <div className={`text-9xl  flex items-center ${data?.type === 'w'?"justify-start text-yellow-900":"justify-end text-blue-900"}`}>
+              {data?.type === 'r'?<BiBookReader /> : <BiEditAlt />}
+            </div>
+          </div>
           <div className="flex w-full z-20 flex-col gap-4 relative items-center">
             <img src={data?.profile_photo} className="w-28 h-28 rounded-full object-cover border-white border-[3px]" alt="" />
             <p className="text-2xl font-bold">{data?.username}</p>
