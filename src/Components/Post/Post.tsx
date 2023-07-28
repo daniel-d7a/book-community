@@ -38,8 +38,8 @@ export default function Post({ user, post }: PostProps) {
   const {mutate: deletePostMutate, isLoading} = useMutation({
     mutationFn: ()=> deletePostById(post.id),
     onSuccess: async () => {
-      const updatedPosts = await queryClient.fetchQuery(["posts"]);
-      queryClient.setQueryData(["posts"], updatedPosts);
+      const updatedPosts = await queryClient.fetchQuery([`${window.location.pathname ==='/'?"posts":"getUserPosts"}`]);
+      queryClient.setQueryData([`${window.location.pathname ==='/'?"posts":"getUserPosts"}`], updatedPosts);
     },
 
   })

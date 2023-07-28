@@ -38,8 +38,9 @@ export default function CreateFeed() {
   const { mutate, isLoading } = useMutation({
     mutationFn: createPost,
     onSuccess: async () => {
-      const updatedPosts = await queryClient.fetchQuery(["posts"]);
-      queryClient.setQueryData(["posts"], updatedPosts);
+      const updatedPosts = await queryClient.fetchQuery([`${window.location.pathname ==='/'?"posts":"getUserPosts"}`]);
+      queryClient.setQueryData([`${window.location.pathname ==='/'?"posts":"getUserPosts"}`], updatedPosts);
+      
     },
   });
 
