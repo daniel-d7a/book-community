@@ -3,11 +3,17 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getCurrentUser, signup } from "../../Firebase/api/auth/auth";
-import { SignUpData } from "../../Types/Auth";
+import { SignUpData, signUpDataSchema } from "../../Types/Auth";
 import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function SignUp() {
-  const { register, handleSubmit } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(signUpDataSchema),
     defaultValues: {
       email: "",
       password: "",
@@ -60,31 +66,57 @@ export default function SignUp() {
           </span>
         </p>
         <form onSubmit={handleSubmit(submitHandler)} className="space-y-4">
-          <input
-            type="text"
-            placeholder="Email"
-            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
-            {...register("email", { required: true })}
-          />
-          <input
-            type="text"
-            placeholder="User Name"
-            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
-            {...register("username", { required: true })}
-          />
+          <div>
+            <input
+              type="text"
+              placeholder="Email"
+              className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
+              {...register("email", { required: true })}
+            />
+            {errors.email && (
+              <div className="text-red-600 mt-2">{errors.email?.message}</div>
+            )}
+          </div>
+          <div>
+            <input
+              type="text"
+              placeholder="User Name"
+              className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
+              {...register("username", { required: true })}
+            />
+            {errors.username && (
+              <div className="text-red-600 mt-2">
+                {errors.username?.message}
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Password"
+              className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
+              {...register("password", { required: true })}
+            />
+            {errors.password && (
+              <div className="text-red-600 mt-2">
+                {errors.password?.message}
+              </div>
+            )}
+          </div>
+          <div>
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              className="input input-bordered w-[350px] py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
+              {...register("confirmPassword", { required: true })}
+            />
+            {errors.confirmPassword && (
+              <div className="text-red-600 mt-2">
+                {errors.confirmPassword?.message}
+              </div>
+            )}
+          </div>
 
-          <input
-            type="password"
-            placeholder="Password"
-            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
-            {...register("password", { required: true })}
-          />
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            className="input input-bordered w-full py-6 rounded-sm bg-slate-900 focus:outline-none focus:border-yellow-500"
-            {...register("confirmPassword", { required: true })}
-          />
           <div className="form-control mb-0">
             <label className="label cursor-pointer">
               <span className="label-text">Writer</span>
