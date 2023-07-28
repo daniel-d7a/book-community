@@ -252,7 +252,9 @@ export default function Post({ user, post }: PostProps) {
           </p>
         </div>
 
-        {!isLoading && <PhotoGrid images={post.images} />}
+        {!isLoading && post.images?.length > 0 && (
+          <PhotoGrid images={post.images} />
+        )}
 
         <div className="flex gap-4 items-center px-4 py-2">
           <p className="flex gap-2 items-center">
