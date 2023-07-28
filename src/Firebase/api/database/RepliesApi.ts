@@ -30,19 +30,21 @@ export async function getCommentReplies(
   const docRef = doc(db, "comments", commentId);
   const docSnap = await getDoc(docRef);
   const replyIds = docSnap.data()?.reply_ids;
-  return await Promise.all(
-    replyIds.map(async (id: string) => {
-      const replyData = (await getDoc(doc(db, "replies", id))).data();
-      const userData = (
-        await getDoc(doc(db, "users", replyData?.user_id))
-      ).data();
-      return {
-        id,
-        ...replyData,
-        user_data: userData,
-      };
-    })
-  );
+  return (
+    await Promise.all(
+      replyIds.map(async (id: string) => {
+        const replyData = (await getDoc(doc(db, "replies", id))).data();
+        const userData = (
+          await getDoc(doc(db, "users", replyData?.user_id))
+        ).data();
+        return {
+          id,
+          ...replyData,
+          user_data: userData,
+        };
+      })
+    )
+  ).sort((a, b) => b.created_at - a.created_at);
 }
 
 /**
@@ -63,6 +65,8 @@ export async function addReply(commentId: string, text: string): Promise<void> {
     created_at: Timestamp.now(),
     user_id: auth?.currentUser?.uid,
     comment_id: commentId,
+    votes: 0,
+    voter_ids: [],
   });
 
   const docRef = doc(db, "comments", commentId);
@@ -85,7 +89,7 @@ export async function voteReply(
 ): Promise<void> {
   if (vote !== "up" && vote !== "down")
     throw new Error(`Invalid vote, vote should only be "up" or "down"`);
-  const docRef = doc(db, "comments", id);
+  const docRef = doc(db, "replies", id);
   const docData = (await getDoc(docRef)).data();
 
   console.log("current user id", auth?.currentUser?.uid);

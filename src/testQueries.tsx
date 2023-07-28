@@ -9,6 +9,7 @@ import {
   uploadUserProfilePhoto,
 } from "./Firebase/api/database/UserApi";
 import { createPost } from "./Firebase/api/database/PostsApi";
+import { voteReply } from "./Firebase/api/database/RepliesApi";
 
 export default function TestQueries() {
   // const { data, status } = useQuery({
@@ -20,7 +21,7 @@ export default function TestQueries() {
 
   const { mutate, status, data } = useMutation({
     mutationFn: ({ id, vote }: { id: string; vote: "up" | "down" }) =>
-      voteComment(id, vote),
+      voteReply(id, vote),
   });
 
   if (status === "loading") return <>loading...</>;
@@ -45,8 +46,8 @@ export default function TestQueries() {
         className="btn"
         onClick={() => {
           mutate({
-            id: "2zTesemTJKGDaAzjFhdu",
-            vote: "doSDFwn",
+            id: "fkMeQjRHFDkNp14mmeZ9",
+            vote: "up",
           });
         }}
       >
