@@ -3,8 +3,8 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getCurrentUser, signup } from "../../Firebase/api/auth/auth";
-import { useNavigate } from "react-router";
 import { SignUpData } from "../../Types/Auth";
+import { useNavigate } from "react-router-dom";
 
 export default function SignUp() {
   const { register, handleSubmit } = useForm({
@@ -32,6 +32,7 @@ export default function SignUp() {
       console.log("auth data from firebase", data);
       await getCurrentUser();
       navigate("/login");
+      // return <Navigate to={"/login"} replace />;
     },
   });
   // add user to users collection
@@ -51,7 +52,10 @@ export default function SignUp() {
         <h2 className="text-3xl font-bold mb-2 md:text-center">Sign Up</h2>
         <p className="font-light text-center mb-6">
           Already have an account?{" "}
-          <span className="text-yellow-500 cursor-pointer" onClick={() => navigate("/login")}>
+          <span
+            className="text-yellow-500 cursor-pointer"
+            onClick={() => navigate("/login")}
+          >
             Log In
           </span>
         </p>

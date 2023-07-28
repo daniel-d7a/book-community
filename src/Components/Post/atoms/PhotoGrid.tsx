@@ -1,3 +1,8 @@
+import ReactModal from "react-modal";
+import { useState } from "react";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+
 export default function PhotoGrid({ images }: { images: string[] }) {
   console.log("photo grid images", images);
 
@@ -31,12 +36,18 @@ export default function PhotoGrid({ images }: { images: string[] }) {
     }
   }
 
+  const [modalImage, setModalImage] = useState(-1);
+
   return (
     <>
       <div className=" px-2 mb-3 grid grid-cols-2 grid-rows-6 gap-2 h-[400px] relative">
         {images.slice(0, 4).map((image: string, index: number) => (
           <div key={image} className={`${imageStyles(index)}`}>
-            <img src={image} className={`object-cover w-full h-full`} />
+            <img
+              onClick={() => setModalImage(index)}
+              src={image}
+              className={`object-cover w-full h-full`}
+            />
           </div>
         ))}
         {images.length > 4 && (
@@ -46,6 +57,17 @@ export default function PhotoGrid({ images }: { images: string[] }) {
           </div>
         )}
       </div>
+
+      <ReactModal shouldCloseOnOverlayClick shouldCloseOnEsc isOpen={modalImage !== -1}>
+        <Carousel selectedItem={modalImage}>
+          {images.map((image: string, index: number) => (
+            <div>
+              <img src={image} />
+              <p className="legend">Legend 3</p>
+            </div>
+          ))}
+        </Carousel>
+      </ReactModal>
     </>
   );
 }
