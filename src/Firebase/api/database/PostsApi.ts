@@ -18,6 +18,8 @@ import {
 import { db } from "./database";
 import { auth } from "../auth/auth";
 import { ApiPost, Post } from "../../../Types/Posts";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { storage } from "./database";
 
 const postsCollectionRef = collection(db, "posts");
 
@@ -68,7 +70,6 @@ export async function getUserPosts(userId: string): Promise<ApiPost[]> {
   });
 }
 
-
 /**
  * Retrieves a post from the API by its ID.
  *
@@ -95,14 +96,39 @@ export async function getPostById(id: string): Promise<ApiPost> {
  */
 export async function createPost(post: Post): Promise<string> {
   console.log("post from api", post);
+
   const newPostId = await addDoc(postsCollectionRef, {
-    ...post,
+    text: post.text,
     created_at: Timestamp.now(),
     user_id: auth?.currentUser?.uid,
     comment_ids: [],
     votes: 0,
     voter_ids: [],
   });
+
+  console.log("doc added", newPostId.id);
+
+  const { images } = post;
+
+  const urls = await Promise.all(
+    images.map(async (image) => {
+      const postImageStorageRef = ref(
+        storage,
+        `posts/${newPostId.id}/${image.name}`
+      );
+      await uploadBytes(postImageStorageRef, image);
+      return await getDownloadURL(postImageStorageRef);
+    })
+  );
+
+  console.log("urls", urls);
+
+  await updateDoc(doc(db, "posts", newPostId.id), {
+    images: urls,
+  });
+
+  console.log("doc updated");
+
   return newPostId.id;
 }
 
@@ -116,7 +142,6 @@ export async function deletePostById(id: string): Promise<void> {
   const docRef = doc(db, "posts", id);
   return await deleteDoc(docRef);
 }
-
 
 /**
  * Vote on a post.
