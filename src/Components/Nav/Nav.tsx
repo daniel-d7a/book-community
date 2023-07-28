@@ -195,7 +195,7 @@ export default function Nav() {
                       </p>
                     </div>
                   </div>
-                  <button className="w-full flex items-center justify-center py-2 text-sm bg-yellow-950 text-yellow-500">
+                  <button onClick={()=>navigate(`/profile/${auth.currentUser?.uid}`)} className="w-full flex items-center justify-center py-2 text-sm bg-yellow-950 text-yellow-500">
                     View profile
                   </button>
                   <button

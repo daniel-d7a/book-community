@@ -8,6 +8,7 @@ import { auth } from "../../Firebase/api/auth/auth";
 import { BsSendFill } from "react-icons/bs";
 import ReplyContentBody from "./ReplyContentBody";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function RepliesContent({ commentID }: { commentID: string }) {
     
@@ -28,7 +29,7 @@ export default function RepliesContent({ commentID }: { commentID: string }) {
     });
 
     const queryClient = useQueryClient();
-
+    const navigate = useNavigate()
     const { mutate, isLoading } = useMutation({
         mutationFn: ({ id, text }: { id: string; text: string }) =>
           addReply(id, text),
@@ -84,6 +85,7 @@ export default function RepliesContent({ commentID }: { commentID: string }) {
           <div className="flex gap-2 mt-2">
             <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
               <img
+                onClick={()=>navigate(`/profile/${auth.currentUser?.uid}`)}
                 src={
                   isSuccess?userData?.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
                 }

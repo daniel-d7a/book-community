@@ -12,6 +12,7 @@ import { BiSend } from "react-icons/bi";
 import { auth } from "../../Firebase/api/auth/auth";
 import { BsSendFill } from "react-icons/bs";
 import { getUserById } from "../../Firebase/api/database/UserApi";
+import { useNavigate } from "react-router-dom";
 
 export default function CommentsContent({ postID }: { postID: string }) {
   // const {comms, setComms} = useState(null);
@@ -60,7 +61,7 @@ export default function CommentsContent({ postID }: { postID: string }) {
     reset();
   }
 
-
+  const navigate = useNavigate()
   if (status === "loading") {
     return (
       <div role="status" className="w-full flex flex-col items-center">
@@ -89,6 +90,7 @@ export default function CommentsContent({ postID }: { postID: string }) {
       <div className="flex gap-2 mt-2">
         <div className="w-10 h-10 rounded-full overflow-hidden shrink-0">
           <img
+            onClick={()=>navigate(`/profile/${auth.currentUser?.uid}`)}
             src={
               isSuccess?userData?.profile_photo:"https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
             }

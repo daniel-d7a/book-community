@@ -3,6 +3,7 @@ import { BiCommentDetail, BiDownvote, BiUpvote } from "react-icons/bi";
 import { ApiComment } from "../../Types/Comments";
 import getDate from "../../Helper/DateFormatter";
 import RepliesContent from "./RepliesContent";
+import { useNavigate } from "react-router-dom";
 
 export default function CommentContentBody({
   comment,
@@ -13,7 +14,7 @@ export default function CommentContentBody({
   const [upVoted, setUpvoted] = useState(false);
   const [downVoted, setDownvoted] = useState(false);
   const [showMore, setShowMore] = useState(false);
-
+  const navigate = useNavigate()
   function handleclick(amount: number) {
     if (!upVoted && !downVoted) {
       if (amount === 1) {
@@ -39,16 +40,18 @@ export default function CommentContentBody({
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
             <img
+              onClick={()=>navigate(`/profile/${comment.user_id}`)}
               src={
                 comment.user_data?.profile_photo
                   ? comment.user_data?.profile_photo
                   : "https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg"
               }
+              className="cursor-pointer"
             />
           </div>
         </div>
-        <div className="chat-header mb-2 text-sm">
-          {comment.user_data.username}
+        <div className="chat-header mb-2 text-sm flex">
+          <p className="cursor-pointer" onClick={()=>navigate(`/profile/${comment.user_id}`)}>{comment.user_data.username}</p>
           <time className="text-sm opacity-50 ml-2">
             {getDate(comment.created_at)}
           </time>
