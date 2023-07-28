@@ -9,9 +9,10 @@ import Post from "../Post/Post";
 import { SignUpData } from "../../Types/Auth";
 import { ApiPost } from "../../Types/Posts";
 import Nav from "../Nav/Nav";
+import { useEffect } from "react";
 
 export default function Profile() {
-  window.scrollTo(0, 0)
+  
   const params = useParams()
   console.log(params.user_id)
   const { data, status } = useQuery({
@@ -22,7 +23,9 @@ export default function Profile() {
     queryKey: ["getUserPosts"],
     queryFn: () => getUserPosts(params.user_id?params.user_id:""),
   });
-  
+  useEffect(()=>{
+    window.scrollTo(0, 0)
+  },[])
   return(<div className="bg-slate-900 min-h-screen mb-0 overflow-hidden">
     <Nav/>
     <div className="px-4 pt-20 flex flex-col">
