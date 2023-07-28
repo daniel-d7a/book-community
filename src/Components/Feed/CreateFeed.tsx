@@ -122,7 +122,7 @@ export default function CreateFeed() {
             </div>
             {images.length > 0 && (
               <div
-                className={` ${slider} flex justify-center items-center overflow-x-scroll`}
+                className={` ${slider} flex justify-start items-center overflow-x-scroll`}
                 style={{
                   scrollbarColor: "red",
                 }}

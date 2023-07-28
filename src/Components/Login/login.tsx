@@ -100,7 +100,7 @@ export default function Login() {
               <input
                 type="checkbox"
                 checked={check}
-                onClick={() => {
+                onChange={() => {
                   setCheck(!check);
                 }}
                 className="checkbox checkbox-sm checkbox-warning"

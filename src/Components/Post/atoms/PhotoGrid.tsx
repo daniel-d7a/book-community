@@ -4,7 +4,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 import { Carousel } from "react-responsive-carousel";
 
 export default function PhotoGrid({ images }: { images: string[] }) {
-  console.log("photo grid images", images);
+  // console.log("photo grid images", images);
 
   if (!images) return null;
 
@@ -37,6 +37,7 @@ export default function PhotoGrid({ images }: { images: string[] }) {
   }
 
   const [modalImage, setModalImage] = useState(-1);
+  console.log("modalImage", modalImage);
 
   return (
     <>
@@ -58,12 +59,54 @@ export default function PhotoGrid({ images }: { images: string[] }) {
         )}
       </div>
 
-      <ReactModal shouldCloseOnOverlayClick shouldCloseOnEsc isOpen={modalImage !== -1}>
-        <Carousel selectedItem={modalImage}>
+      <ReactModal
+        ariaHideApp={false}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        isOpen={modalImage !== -1}
+        onRequestClose={() => {
+          setModalImage(-1);
+        }}
+        style={{
+          content: {
+            marginInline: "auto",
+            width: "85%",
+            height: "85%",
+            top: "12%",
+            backgroundColor: "#2a2a2a",
+            border: "none",
+          },
+          overlay: {
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+          },
+        }}
+      >
+        <Carousel
+          showArrows
+          showThumbs={false}
+          selectedItem={modalImage}
+          centerMode
+          swipeable
+          useKeyboardArrows
+          infiniteLoop
+          // renderIndicator={(
+          //   clickHandler: (e: React.MouseEvent | React.KeyboardEvent) => void,
+          //   isSelected: boolean,
+          //   index: number,
+          //   label: string
+          // ) => (
+          //   <span
+          //     className={`${
+          //       isSelected ? "bg-opacity-100" : "bg-opacity-40"
+          //     } w-2 h-2 bg-white rounded-full mx-2 px-2 py-1`}
+          //   >
+          //     {index}
+          //   </span>
+          // )}
+        >
           {images.map((image: string, index: number) => (
-            <div>
-              <img src={image} />
-              <p className="legend">Legend 3</p>
+            <div className="h-[77vh] flex items-center justify-center">
+              <img src={image} className="object-contain w-full h-full" />
             </div>
           ))}
         </Carousel>

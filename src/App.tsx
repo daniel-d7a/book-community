@@ -14,7 +14,8 @@ function App() {
         <Routes>
           <Route path="*" element={<Home />} />
           {/* <Route path="/notifications" element={<Notifications />} /> */}
-          <Route path="signup" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/test" element={<TestQueries />} />
           <Route path={`/profile/:user_id`} Component={Profile} />
           {/* <Route path="/profile" element={<Profile />} /> */}
