@@ -1,0 +1,25 @@
+.slider {
+  background-color: inherit;
+}
+
+.slider::-webkit-scrollbar {
+  /* width: 10px; */
+  height: 6px;
+}
+
+/* Track */
+.slider::-webkit-scrollbar-track {
+  height: 4px;
+}
+
+/* Handle */
+.slider::-webkit-scrollbar-thumb {
+  height: 4px;
+  border-radius: 50px;
+  background: #42424277;
+}
+
+/* Handle on hover */
+.slider::-webkit-scrollbar-thumb:hover {
+  background: #424242ff;
+}

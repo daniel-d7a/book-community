@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { string, z } from "zod";
+import { Link } from "react-router-dom";
 
 const scheme = z.object({
   email: string().email({ message: "Invalid email address" }),
@@ -69,12 +70,9 @@ export default function Login() {
         <h2 className="text-3xl font-bold mb-2 md:text-center">Log In</h2>
         <p className="font-light text-center mb-6">
           Don't have an account?{" "}
-          <span
-            onClick={() => navigate("/signup")}
-            className="text-yellow-500 cursor-pointer"
-          >
+          <Link to={"/signup"} className="text-yellow-500 cursor-pointer">
             Sign Up
-          </span>
+          </Link>
         </p>
         <form onSubmit={handleSubmit(submit)} className="space-y-2 w-full">
           <input
@@ -102,7 +100,7 @@ export default function Login() {
               <input
                 type="checkbox"
                 checked={check}
-                onClick={() => {
+                onChange={() => {
                   setCheck(!check);
                 }}
                 className="checkbox checkbox-sm checkbox-warning"
