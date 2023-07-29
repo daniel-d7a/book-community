@@ -4,11 +4,9 @@ import SignUp from "./Components/Signup/signup";
 import Login from "./Components/Login/login";
 import TestQueries from "./testQueries";
 import Profile from "./Components/profile/Profile";
-<<<<<<< HEAD
 import Nav from "./Components/Nav/Nav";
 import Yelo from "./Components/Yelo/Yelo";
-=======
->>>>>>> 5138c455aaea4329308333484e21259121e8f0d6
+
 
 const restricted_paths = ["/login", "/signup"];
 

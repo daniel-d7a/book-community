@@ -1,24 +1,18 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-<<<<<<< HEAD
-import { useRef } from "react";
+
 import { getPostComments } from "./Firebase/api/database/CommentsApi";
 import { getAllUsers, getUserById, uploadUserProfilePhoto } from "./Firebase/api/database/UserApi";
-=======
+
 import { useRef, useState } from "react";
 import { getAllPostsPaginated } from "./Firebase/api/database/PostsApi";
->>>>>>> 5138c455aaea4329308333484e21259121e8f0d6
+
 
 export default function TestQueries() {
   const [page, setPage] = useState(1);
 
   const { data, status } = useQuery({
-<<<<<<< HEAD
-    queryKey: ["test query"],
-    queryFn: () => getAllUsers(),
-=======
     queryKey: ["test query", page],
     queryFn: getAllPostsPaginated,
->>>>>>> 5138c455aaea4329308333484e21259121e8f0d6
   });
 
   // const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;
