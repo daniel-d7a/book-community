@@ -57,7 +57,7 @@ export default function ChatRoom({chatID}:{chatID:any}) {
         <div className="px-4 overflow-y-scroll h-full">
             {status === "success" && data?.map(msg => <MessageBubble key={msg.id} message={msg}/>)}
         </div>
-        <div className="absolute bottom-0 left-0 w-full">
+        <div className="fixed bottom-0 lg:left-1/4 left-0 w-full lg:w-3/4">
             <form
             onSubmit={handleSubmit(submit)}
             className="w-full bg-slate-900 h-12 flex items-center"
