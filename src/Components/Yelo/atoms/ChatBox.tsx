@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getUserById } from "../../../Firebase/api/database/UserApi";
 
 export default function ChatBox({userId}:{userId:any}) {
-    console.log(userId)
+    // console.log(userId)
     const { data:user, isSuccess } = useQuery({
         queryKey: ["getChatUserID", userId],
         queryFn: () => getUserById(userId),

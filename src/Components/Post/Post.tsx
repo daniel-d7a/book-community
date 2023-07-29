@@ -19,6 +19,8 @@ import CommentsContent from "../Comments/CommentsContent";
 import { deletePostById, votePost } from "../../Firebase/api/database/PostsApi";
 import { auth } from "../../Firebase/api/auth/auth";
 import PhotoGrid from "./atoms/PhotoGrid";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 type PostProps = {
   user: SignUpData;
@@ -253,7 +255,21 @@ export default function Post({ user, post }: PostProps) {
         </div>
 
         {!isLoading && post.images?.length > 0 && (
-          <PhotoGrid images={post.images} />
+          // <PhotoGrid images={post.images} />
+          <Carousel
+            showArrows
+            showThumbs={false}
+            centerMode
+            swipeable
+            useKeyboardArrows
+            // infiniteLoop
+          >
+            {post?.images.map((image: string, index: number) => (
+              <div className="h-[77vh] flex items-center justify-center">
+                <img src={image} className="object-contain w-full h-full" />
+              </div>
+            ))}
+          </Carousel>
         )}
 
         <div className="flex gap-4 items-center px-4 py-2">
