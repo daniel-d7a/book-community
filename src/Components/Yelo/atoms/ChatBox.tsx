@@ -1,4 +1,13 @@
-export default function ChatBox({user}:{user:any}) {
+import { useQuery } from "@tanstack/react-query";
+import { getUserById } from "../../../Firebase/api/database/UserApi";
+
+export default function ChatBox({userId}:{userId:any}) {
+    console.log(userId)
+    const { data:user, isSuccess } = useQuery({
+        queryKey: ["getChatUserID", userId],
+        queryFn: () => getUserById(userId),
+      });
+    
     return(<div className="w-full flex items-center gap-4 cursor-pointer">
         <img
             src={
@@ -9,7 +18,7 @@ export default function ChatBox({user}:{user:any}) {
             className=" w-10 h-10 rounded-full object-cover cursor-pointer"
             />
         <div className="flex flex-col ">
-            <p className="font-bold text-sm">{user.username}</p>
+            <p className="font-bold text-sm">{isSuccess && user.username}</p>
             <p className="text-xs">Temp message</p>
         </div>
     </div>)

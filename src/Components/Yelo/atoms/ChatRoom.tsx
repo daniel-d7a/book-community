@@ -1,4 +1,71 @@
-export default function ChatRoom() {
-    return(<div className="h-full w-3/4 bg-slate-800">
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { addMessage, getChatMessages } from "../../../Firebase/api/database/MessagesApi";
+import MessageBubble from "./MesssageBubble";
+import { string, z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { BsSendFill } from "react-icons/bs";
+
+export default function ChatRoom({chatID}:{chatID:any}) {
+    const scheme = z.object({
+        msgText: string().min(1, { message: "message text can't be empty" }),
+      });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+      } = useForm({
+        resolver: zodResolver(scheme),
+        defaultValues: {
+          msgText: "",
+        },
+      });
+    if(!chatID){
+        return(<>Hello</>)
+    }
+    const queryClient = useQueryClient(); 
+    const { mutate, isLoading } = useMutation({
+        mutationFn: ({ id, text }: { id: string; text: string }) =>
+          addMessage(id, text),
+    
+        onSuccess: async () => {
+          const updatedMessages = await queryClient.fetchQuery([
+            "msgsForChat",
+            chatID,
+          ]);
+          queryClient.setQueryData(["msgsForChat", chatID], updatedMessages);
+        },
+      });
+    const { data, status } = useQuery({
+        queryKey: ["msgsForChat", chatID],
+        queryFn: () => getChatMessages(chatID),
+        });
+    
+    function submit(data:any) {
+        console.log(data);
+        
+        mutate({ text: data.msgText, id: chatID });
+        reset();
+    }
+    return(<div className="h-full relative w-3/4 bg-slate-800">
+        <div className="px-4 overflow-y-scroll h-full">
+            {status === "success" && data?.map(msg => <MessageBubble key={msg.id} message={msg}/>)}
+        </div>
+        <div className="absolute bottom-0 left-0 w-full">
+            <form
+            onSubmit={handleSubmit(submit)}
+            className="w-full bg-slate-900 h-12 flex items-center"
+            >
+            <textarea
+                {...register("msgText")}
+                placeholder="Write a message"
+                className="focus:outline-none bg-transparent h-12 flex items-center max-h-64 p-2 pl-3 rounded-md resize-none transition-all w-full"
+            ></textarea>
+            <button type="submit" className="mr-3 text-xl text-yellow-500">
+                <BsSendFill />
+            </button>
+            </form>
+        </div>
     </div>)
 }
