@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
+
+import { getPostComments } from "./Firebase/api/database/CommentsApi";
+import { getAllUsers, getUserById, uploadUserProfilePhoto } from "./Firebase/api/database/UserApi";
+
 import { useRef, useState } from "react";
 import { getAllPostsPaginated } from "./Firebase/api/database/PostsApi";
+
 
 export default function TestQueries() {
   const [page, setPage] = useState(1);
