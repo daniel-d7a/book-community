@@ -5,6 +5,7 @@ import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BsSendFill } from "react-icons/bs";
+import illust from "../../../assets/undraw_quick_chat_re_bit5.svg"
 
 export default function ChatRoom({chatID}:{chatID:any}) {
     const scheme = z.object({
@@ -22,7 +23,10 @@ export default function ChatRoom({chatID}:{chatID:any}) {
         },
       });
     if(!chatID){
-        return(<>Hello</>)
+        return(<div className="h-full flex flex-col gap-4 items-center justify-center lg:w-3/4 w-full bg-slate-800">
+            <img src={illust} alt="" className="w-40" />
+            <p className="text-2xl text-yellow-500 font-bold">Welcome to Yelo chat</p>
+        </div>)
     }
     const queryClient = useQueryClient(); 
     const { mutate, isLoading } = useMutation({
@@ -48,7 +52,7 @@ export default function ChatRoom({chatID}:{chatID:any}) {
         mutate({ text: data.msgText, id: chatID });
         reset();
     }
-    return(<div className="h-full relative w-3/4 bg-slate-800">
+    return(<div className="h-full relative lg:w-3/4 w-full bg-slate-800">
         <div className="px-4 overflow-y-scroll h-full">
             {status === "success" && data?.map(msg => <MessageBubble key={msg.id} message={msg}/>)}
         </div>
