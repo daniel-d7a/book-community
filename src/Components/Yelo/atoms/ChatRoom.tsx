@@ -5,7 +5,9 @@ import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BsSendFill } from "react-icons/bs";
-import illust from "../../../assets/undraw_quick_chat_re_bit5.svg"
+
+// @ts-ignore
+import {illust} from '../../../assets/undraw_quick_chat_re_bit5.svg'
 
 export default function ChatRoom({chatID}:{chatID:any}) {
     const scheme = z.object({
