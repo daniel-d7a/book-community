@@ -5,9 +5,18 @@ import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { BsSendFill } from "react-icons/bs";
+import { useEffect, useRef } from "react";
 
 export default function ChatRoom({chatID}:{chatID:any}) {
+  const containerRef = useRef<HTMLDivElement>(null);
 
+  useEffect(() => {
+    if (containerRef.current) {
+      setTimeout(() => {
+        containerRef.current?.scrollTo(0, containerRef.current.scrollHeight);
+      }, 0);
+    }
+  }, []);
     const scheme = z.object({
         msgText: string().min(1, { message: "message text can't be empty" }),
       });
@@ -53,8 +62,8 @@ export default function ChatRoom({chatID}:{chatID:any}) {
         mutate({ text: data.msgText, id: chatID });
         reset();
     }
-    return(<div className="h-full relative lg:w-3/4 w-full bg-slate-800">
-        <div className="px-4 overflow-y-scroll h-full">
+    return(<div  className="lg:h-full h-5/6 relative lg:w-3/4 pb-4 lg:pb-14 w-full bg-slate-800">
+        <div ref={containerRef} className="px-4 overflow-y-scroll h-full">
             {status === "success" && data?.map(msg => <MessageBubble key={msg.id} message={msg}/>)}
         </div>
         <div className="fixed bottom-0 lg:left-1/4 left-0 w-full lg:w-3/4">
