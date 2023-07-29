@@ -1,12 +1,12 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRef } from "react";
 import { getPostComments } from "./Firebase/api/database/CommentsApi";
-import { getUserById, uploadUserProfilePhoto } from "./Firebase/api/database/UserApi";
+import { getAllUsers, getUserById, uploadUserProfilePhoto } from "./Firebase/api/database/UserApi";
 
 export default function TestQueries() {
   const { data, status } = useQuery({
     queryKey: ["test query"],
-    queryFn: () => getUserById("Vm4MlX4a5havyADcmomHsSWQ2tg2"),
+    queryFn: () => getAllUsers(),
   });
 
   const fileRef = useRef() as React.MutableRefObject<HTMLInputElement>;

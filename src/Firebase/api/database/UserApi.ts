@@ -10,10 +10,13 @@ import {
   setDoc,
   updateDoc,
 } from "firebase/firestore";
+import firebase from 'firebase/app'
+import 'firebase/database'
 import { db } from "./database";
 import { SignUpData } from "../../../Types/Auth";
 import { storage } from "./database";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { auth } from "../auth/auth";
 
 const userCollectionRef = collection(db, "users");
 
@@ -48,6 +51,27 @@ export async function createUserAfterSignUp(
   const docRef = doc(db, "users", id);
   return await setDoc(docRef, user);
 }
+
+export async function getAllUsers() {
+  const q = query(userCollectionRef);
+  const querySnapshot = await getDocs(q);
+  // console.log("query docs", querySnapshot.docs);
+
+  const usersData = querySnapshot.docs.map((doc) => {
+    return {
+      id: doc.id,
+      ...doc.data(),
+    };
+  }).filter(doc => doc.id !== auth.currentUser?.uid);
+
+  return await Promise.all(
+    usersData.map(async (singleUser) => {
+      // console.log("user data", userData);
+      return {...singleUser};
+    })
+  );
+}
+  
 
 /**
  * Uploads the user's profile photo.

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import { getCurrentUser, signup } from "../../Firebase/api/auth/auth";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { SignUpData } from "../../Types/Auth";
 
 export default function SignUp() {

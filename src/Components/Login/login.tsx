@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { AiOutlineGoogle } from "react-icons/ai";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 import { auth, login } from "../../Firebase/api/auth/auth.js";
 import { useForm } from "react-hook-form";
 
