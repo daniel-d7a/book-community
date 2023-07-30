@@ -11,7 +11,7 @@ import { BsArrowLeftShort, BsSendFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import { BiRightArrow } from "react-icons/bi";
 
-export default function ChatRoom({ chatID }: { chatID: any }) {
+export default function ChatRoom({ chatID, onRemove }: { chatID: any, onRemove:any }) {
   const containerRef = useRef<HTMLDivElement>(null);
 
   const scheme = z.object({
@@ -78,9 +78,9 @@ export default function ChatRoom({ chatID }: { chatID: any }) {
     reset();
   }
   return (
-    <div className={`lg:h-full h-full lg:relative fixed top-0 lg:w-3/4 lg:pb-4 w-full lg:z-10 z-20 bg-slate-800 ${hide && "hidden"}`}>
+      !hide && <div className={`lg:h-full h-full lg:relative fixed top-0 lg:w-3/4 lg:pb-4 w-full lg:z-10 z-20 bg-slate-800`}>
       <div className="bg-slate-900 h-12 w-full fixed top-16 z-30  flex lg:hidden items-center px-4 text-3xl">
-        <BsArrowLeftShort onClick={()=>setHide(true)}/>
+        <BsArrowLeftShort onClick={()=>{onRemove()}}/>
       </div>
       <div className="px-4 pb-4 lg:pb-0 overflow-y-scroll h-full">
         {
