@@ -22,7 +22,6 @@ export async function getUserChats(): Promise<ApiChat[]> {
 
   return await Promise.all(
     chatsData.map(async (singleChat) => {
-      console.log("chat data", singleChat);
       return { ...singleChat } as ApiChat;
     })
   );
