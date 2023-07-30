@@ -14,6 +14,7 @@ import {
   orderBy,
   limit,
   onSnapshot,
+  DocumentSnapshot,
 } from "firebase/firestore";
 import firebase from "firebase/app";
 import "firebase/database";
@@ -44,33 +45,76 @@ export async function getMessagesById(id: string) {
   }
 }
 
-export async function getChatMessages(chatId: string) {
+// export async function getChatMessages(chatId: string) {
+//   if (!chatId) throw new Error("chatId cannot be empty");
+
+//   const docRef = doc(db, "chats", chatId);
+//   const docSnap = await getDoc(docRef);
+//   const messagesIds = docSnap.data()?.message_ids;
+//   console.log(messagesIds);
+
+//   const messages = await Promise.all(
+//     messagesIds.map(async (id: string) => {
+//       const messageData = (await getDoc(doc(db, "messages", id))).data();
+//       // console.log("message data", messageData);
+
+//       const userData = (
+//         await getDoc(doc(db, "users", messageData?.sender_id))
+//       ).data();
+//       return {
+//         id,
+//         ...messageData,
+//         user_data: userData,
+//       };
+//     })
+//   );
+
+//   return messages.sort((a, b) => a.sent_at - b.sent_at);
+// }
+
+export async function getLatestAddedMessage(
+  chatId: string,
+  setData: (msg: any) => void
+) {
   if (!chatId) throw new Error("chatId cannot be empty");
 
-  const docRef = doc(db, "chats", chatId);
-  const docSnap = await getDoc(docRef);
-  const messagesIds = docSnap.data()?.message_ids;
-  console.log(messagesIds);
-
-  const messages = await Promise.all(
-    messagesIds.map(async (id: string) => {
-      const messageData = (await getDoc(doc(db, "messages", id))).data();
-      // console.log("message data", messageData);
-
-      const userData = (
-        await getDoc(doc(db, "users", messageData?.sender_id))
-      ).data();
-      return {
-        id,
-        ...messageData,
-        user_data: userData,
-      };
-    })
+  const q = query(
+    messagesCollectionRef,
+    where("chat_id", "==", chatId),
+    orderBy("sent_at", "desc"),
+    limit(1)
   );
 
-  return messages.sort((a, b) => a.sent_at - b.sent_at);
-}
+  let unsubscribe;
+  const unsubscribeSnapshot = onSnapshot(q, (querySnapshot) => {
+    querySnapshot.forEach((document) => {
+      const messageData = document.data();
+      const senderId = messageData.sender_id;
+      const senderRef = doc(db, "users", senderId);
+      getDoc(senderRef)
+        .then((senderSnap: DocumentSnapshot) => {
+          const senderData = senderSnap.data();
+          const messageObj = {
+            ...messageData,
+            id: document.id,
+            user: senderData,
+          };
+          setData(messageObj);
+        })
+        .catch((error) => {
+          console.error("Error getting sender data: ", error);
+        });
+    });
+  });
 
+  unsubscribe = () => {
+    unsubscribeSnapshot();
+  };
+
+  return {
+    unsubscribe,
+  };
+}
 export async function getMessagesRealTime(
   chatId: string,
   setData: (msgs: any[]) => void
@@ -79,8 +123,8 @@ export async function getMessagesRealTime(
 
   const docRef = doc(db, "chats", chatId);
   const docSnap = await getDoc(docRef);
-  const messagesIds = docSnap.data()?.message_ids;
-  console.log("message ids", messagesIds);
+  // const messagesIds = docSnap.data()?.message_ids;
+  // console.log("message ids", messagesIds);
 
   const q = query(
     messagesCollectionRef,
@@ -89,7 +133,7 @@ export async function getMessagesRealTime(
   );
 
   let allMessages: any[] = [];
-  console.log("messages before ", allMessages);
+  // console.log("messages before ", allMessages);
 
   const unsubscribe = onSnapshot(q, (querySnapshot) => {
     allMessages = [];
@@ -100,7 +144,7 @@ export async function getMessagesRealTime(
       });
     });
     setData(allMessages);
-    console.log("messages after", allMessages);
+    // console.log("messages after", allMessages);
   });
 
   return {

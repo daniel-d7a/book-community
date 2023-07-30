@@ -1,15 +1,15 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   addMessage,
-  getChatMessages,
   getMessagesRealTime,
 } from "../../../Firebase/api/database/MessagesApi";
 import MessageBubble from "./MesssageBubble";
 import { string, z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BsSendFill } from "react-icons/bs";
+import { BsArrowLeftShort, BsSendFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
+import { BiRightArrow } from "react-icons/bi";
 
 export default function ChatRoom({ chatID }: { chatID: any }) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function ChatRoom({ chatID }: { chatID: any }) {
   });
   if (!chatID) {
     return (
-      <div className="h-full flex flex-col gap-4 items-center justify-center lg:w-3/4 w-full bg-slate-800">
+      <div className="h-full hidden lg:flex flex-col gap-4 items-center justify-center lg:w-3/4 w-full bg-slate-800">
         <img
           src="https://firebasestorage.googleapis.com/v0/b/book-community-8cbb7.appspot.com/o/illustrates%2Fundraw_quick_chat_re_bit5.svg?alt=media&token=23945bd8-d876-4a19-bde5-5b1aa47de02c"
           alt=""
@@ -43,36 +43,15 @@ export default function ChatRoom({ chatID }: { chatID: any }) {
       </div>
     );
   }
-  const queryClient = useQueryClient();
+
+  
   const { mutate, isLoading } = useMutation({
     mutationFn: ({ id, text }: { id: string; text: string }) =>
       addMessage(id, text),
-
-    // onSuccess: async () => {
-    //   const updatedMessages = await queryClient.fetchQuery([
-    //     "msgsForChat",
-    //     chatID,
-    //   ]);
-    //   queryClient.setQueryData(["msgsForChat", chatID], updatedMessages);
-    // },
   });
-  // const { data, status } = useQuery({
-  //   queryKey: ["msgsForChat", chatID],
-  //   queryFn: () => getMessagesRealTime(chatID),
-  // });
+  const [hide, setHide] = useState(false)
 
   const [data, setData] = useState<any[]>([]);
-
-  useEffect(() => {
-    (async () => {
-      const initialMessages = await getChatMessages(chatID);
-      setData(initialMessages);
-    })();
-  }, []);
-
-  // function scrollDown() {
-
-  // }
 
   useEffect(() => {
     let messagesSnapshot!: any;
@@ -90,6 +69,7 @@ export default function ChatRoom({ chatID }: { chatID: any }) {
       });
     }
   }, [data]);
+  
 
   function submit(data: any) {
     console.log(data);
@@ -98,26 +78,30 @@ export default function ChatRoom({ chatID }: { chatID: any }) {
     reset();
   }
   return (
-    <div className="lg:h-full h-5/6 relative lg:w-3/4 pb-4 w-full bg-slate-800">
-      <div className="px-4 overflow-y-scroll h-full">
+    <div className={`lg:h-full h-full lg:relative fixed top-0 lg:w-3/4 lg:pb-4 w-full lg:z-10 z-20 bg-slate-800 ${hide && "hidden"}`}>
+      <div className="bg-slate-900 h-12 w-full fixed top-16 z-30  flex lg:hidden items-center px-4 text-3xl">
+        <BsArrowLeftShort onClick={()=>setHide(true)}/>
+      </div>
+      <div className="px-4 pb-4 lg:pb-0 overflow-y-scroll h-full">
         {
-          // status === "success" &&
           data?.map((msg, index) => (
             <MessageBubble key={msg.id} message={msg} />
           ))
         }
         <div
           ref={containerRef}
-          className="h-10 w-full"
+          className="h-10 lg:h-10 w-full"
         ></div>
       </div>
       <div className="fixed bottom-0 lg:left-1/4 left-0 w-full lg:w-3/4">
         <form
           onSubmit={handleSubmit(submit)}
+          
           className="w-full bg-slate-900 h-12 flex items-center"
         >
           <textarea
             {...register("msgText")}
+            
             placeholder="Write a message"
             className="focus:outline-none bg-transparent h-12 flex items-center max-h-64 p-2 pl-3 rounded-md resize-none transition-all w-full"
           ></textarea>

@@ -12,16 +12,15 @@ export default function Chats() {
     queryKey: ["chats"],
     queryFn: getUserChats,
   });
-  {
-    console.log(chatID);
-  }
   return (
-    <div className="flex lg:flex-row flex-col pt-16 h-screen">
-      <div className="h-24 lg:h-full lg:w-1/4 w-full p-4 flex lg:flex-col flex-row gap-4 bg-slate-900 lg:overflow-y-scroll overflow-x-scroll">
+    <div className="flex  pt-16 h-screen">
+      <div className="h-full lg:w-1/4 w-full p-4 flex flex-col gap-4 bg-slate-900 lg:overflow-y-scroll overflow-y-hidden overflow-x-scroll lg:overflow-x-hidden">
         {data?.map((chat) => (
-          <div key={chat.id} onClick={() => setChatID(chat.id)}>
+          <div key={chat.id} onClick={() => {
+            setChatID(chat.id)}}>
             <ChatBox
               userId={chat.u1 === auth.currentUser?.uid ? chat.u2 : chat.u1}
+              chatID={chat.id}
             />
           </div>
         ))}

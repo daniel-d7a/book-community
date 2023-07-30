@@ -11,7 +11,7 @@ export default function MessageBubble({message}:{message:any}) {
         queryFn: () => getUserById(message.sender_id),
       });
     return(<div className="w-full">
-        <div className={`chat ${message.sender_id === auth.currentUser?.uid?"chat-end":"chat-start"} my-2`}>
+        <div className={`chat ${message.sender_id === auth.currentUser?.uid?"chat-end":"chat-start"} my-1`}>
         <div className="chat-image avatar">
           <div className="w-10 rounded-full">
             <img
@@ -27,7 +27,7 @@ export default function MessageBubble({message}:{message:any}) {
         
         <div
             onClick={()=>setDetails(!details)}
-          className={`px-4 py-2 rounded-tl-xl rounded-tr-xl ${message.sender_id === auth.currentUser?.uid?"rounded-bl-xl":"rounded-br-xl"} ${
+          className={`px-4 py-2 rounded-tl-xl max-w-lg rounded-tr-xl ${message.sender_id === auth.currentUser?.uid?"rounded-bl-xl":"rounded-br-xl"} ${
             "bg-yellow-500"
           } text-white text-sm`}
         >
