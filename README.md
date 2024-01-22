@@ -32,3 +32,4 @@ Book Community is a social media app tailored for book enthusiasts, fostering a 
 
 - **Zod for Schema Validation:** Implements Zod for schema validation to ensure data consistency and prevent potential issues.
 
+- **React Query:** Uses react query for easy integration with firebase api.
